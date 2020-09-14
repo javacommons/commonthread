@@ -85,9 +85,7 @@ t3.start()
 
 for i in range(30):
     print(i)
-    # t2.inq.put(i)
     t2.send(i)
-# t2.inq.put(None)
 t2.send(None)
 
 logging.debug('started')
@@ -96,8 +94,5 @@ while CommonThread.some_are_active():
     time.sleep(0.001)
     CommonThread.log_threads_output(use_print=True)
 CommonThread.log_threads_output(use_print=True)
-
-# t0.join()
-# t1.join()
 
 print(CommonThread.some_are_active())
