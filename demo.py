@@ -65,7 +65,7 @@ class ParserThread(CommonThread):
                     return
 
 
-logging.debug('starting')
+lg.debug('starting')
 
 t0 = MyThread('ONE', 'TWO', 'THREE', required=True)
 t0.name = 't0@MyThread'
@@ -83,12 +83,13 @@ t3 = WorkerThread(worker3, 'install', '-z', 78.654321, 'abc', 'XYZ', 123, 456)
 t3.name = "t3@worker3"
 t3.start()
 
+lg.debug('started')
+
 for i in range(10):
     print(i)
     t2.send(i)
 t2.send(None)
 
-logging.debug('started')
 print(CommonThread.some_are_active())
 while CommonThread.some_are_active():
     time.sleep(0.001)

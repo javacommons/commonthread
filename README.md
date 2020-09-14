@@ -70,7 +70,7 @@ class ParserThread(CommonThread):
                     return
 
 
-logging.debug('starting')
+lg.debug('starting')
 
 t0 = MyThread('ONE', 'TWO', 'THREE', required=True)
 t0.name = 't0@MyThread'
@@ -88,12 +88,13 @@ t3 = WorkerThread(worker3, 'install', '-z', 78.654321, 'abc', 'XYZ', 123, 456)
 t3.name = "t3@worker3"
 t3.start()
 
+lg.debug('started')
+
 for i in range(10):
     print(i)
     t2.send(i)
 t2.send(None)
 
-logging.debug('started')
 print(CommonThread.some_are_active())
 while CommonThread.some_are_active():
     time.sleep(0.001)
@@ -118,29 +119,15 @@ t1@worker1 ==> (123, 'abc', 4.56)
 t1@worker1 ==> {'kw1': 1, 'kw2': 'abcxyz'}
 t2@ParserThread ==> Namespace(x='123', y='2017-09-01 12:12:00')
 t3@worker3 ==> start
-t3@worker3 ==> ('install', '-z', 78.654321, 'abc', 'XYZ', 123, 456)
-t3@worker3 ==> Namespace(operation='install', rest=['123', '456'], w=False, x='abc', y='XYZ', z='78.654321')
 0
 1
-t2@ParserThread ==> 0
-t2@ParserThread ==> 1
 2
-t2@ParserThread ==> 2
 3
 4
 5
 6
 7
 8
-t2@ParserThread ==> 3
-t2@ParserThread ==> 4
-t2@ParserThread ==> 5
-t2@ParserThread ==> 6
-t2@ParserThread ==> 7
-t2@ParserThread ==> 8
-MainThread ==> started
-t2@ParserThread ==> 9
-t2@ParserThread ==> None
 9
 True
 ['this', 'is', 'array']
@@ -148,6 +135,20 @@ ONE
 TWO
 THREE
 from worker1
+MainThread ==> started
+t3@worker3 ==> ('install', '-z', 78.654321, 'abc', 'XYZ', 123, 456)
+t2@ParserThread ==> 0
+t3@worker3 ==> Namespace(operation='install', rest=['123', '456'], w=False, x='abc', y='XYZ', z='78.654321')
+t2@ParserThread ==> 1
+t2@ParserThread ==> 2
+t2@ParserThread ==> 3
+t2@ParserThread ==> 4
+t2@ParserThread ==> 5
+t2@ParserThread ==> 6
+t2@ParserThread ==> 7
+t2@ParserThread ==> 8
+t2@ParserThread ==> 9
+t2@ParserThread ==> None
 t1@worker1 ==> end
 t3@worker3 ==> end
 t0@MyThread ==> end
