@@ -1,6 +1,5 @@
 from commonthread import *
 import datetime
-import logging
 import time
 
 CommonThreadLogger.setup_basic_logging(format='%(threadName)s ==> %(message)s')
@@ -52,7 +51,7 @@ class ParserThread(CommonThread):
     def __init__(self, *args, **kwargs):
         CommonThread.__init__(self, *args, **kwargs)
 
-    def entry(self, *args, **kwargs):
+    def entry(self, *args):
         self.add_argument('x')
         self.add_argument('y')
         # self.add_argument('z')
@@ -69,11 +68,11 @@ class ParserThread(CommonThread):
 logging.debug('starting')
 
 t0 = MyThread('ONE', 'TWO', 'THREE', required=True)
-t0.name = 'MyThread'
+t0.name = 't0@MyThread'
 t0.start()
 
 t1 = WorkerThread(worker1, 123, 'abc', 4.56, kw1=1, kw2='abcxyz')
-t1.name = "worker1"
+t1.name = "t1@worker1"
 t1.start()
 
 t2 = ParserThread(123, datetime.datetime(2017, 9, 1, 12, 12))
@@ -81,10 +80,10 @@ t2.name = 't2@ParserThread'
 t2.start()
 
 t3 = WorkerThread(worker3, 'install', '-z', 78.654321, 'abc', 'XYZ', 123, 456)
-t3.name = "worker3"
+t3.name = "t3@worker3"
 t3.start()
 
-for i in range(30):
+for i in range(10):
     print(i)
     t2.send(i)
 t2.send(None)
