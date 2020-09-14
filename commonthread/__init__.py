@@ -77,13 +77,6 @@ class CommonThread(threading.Thread):
             result.append(self.outq.get())
         return result
 
-    # def log_debug(self, msg):
-    #     return logging.debug(msg)
-
-    @classmethod
-    def setup_basic_logging(cls, level=logging.DEBUG, format='%(threadName)s: %(message)s'):
-        logging.basicConfig(level=level, format=format)
-
     @classmethod
     def some_are_active(cls):
         for thread in threading.enumerate():
@@ -97,8 +90,6 @@ class CommonThread(threading.Thread):
         for thread in threading.enumerate():
             if not isinstance(thread, CommonThread):
                 continue
-            # while not thread.outq.empty():
-            #     result.append(thread.outq.get())
             result.extend(thread.receive_available())
         return result
 
