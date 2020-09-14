@@ -3,21 +3,22 @@ import datetime
 import logging
 import time
 
-CommonThread.setup_basic_logging(format='%(threadName)s ==> %(message)s')
+CommonThreadLogger.setup_basic_logging(format='%(threadName)s ==> %(message)s')
+lg = CommonThreadLogger()
 
 
 def worker1(th, *args, **kwargs):
-    th.log_debug('start')
-    th.log_debug(args)
-    th.log_debug(kwargs)
+    lg.debug('start')
+    lg.debug(args)
+    lg.debug(kwargs)
     th.output('from worker1')
     time.sleep(2)
-    th.log_debug('end')
+    lg.debug('end')
 
 
 def worker3(th, *args):
-    th.log_debug('start')
-    th.log_debug(args)
+    lg.debug('start')
+    lg.debug(args)
     th.add_argument('operation', choices=['install', 'uninstall', 'update'], help='type of operation')
     th.add_argument('x')
     th.add_argument('y')
@@ -25,9 +26,9 @@ def worker3(th, *args):
     th.add_argument('-w', action='store_true')
     th.add_argument('rest', nargs='*', help='file or directory')
     th.parse_args()
-    th.log_debug(th.params)
+    lg.debug(th.params)
     time.sleep(2)
-    th.log_debug('end')
+    lg.debug('end')
 
 
 class MyThread(CommonThread):
@@ -36,14 +37,14 @@ class MyThread(CommonThread):
         CommonThread.__init__(self, *args, **kwargs)
 
     def entry(self, *args, **kwargs):
-        self.log_debug('Starting Thread named {}, args={}, kwargs={}'.format(self.name, args, kwargs))
+        lg.debug('Starting Thread named {}, args={}, kwargs={}'.format(self.name, args, kwargs))
         self.outq.put(['this', 'is', 'array'])
-        self.log_debug(self.args)
+        lg.debug(self.args)
         for i in self.args:
-            self.log_debug(i)
+            lg.debug(i)
             self.output(i)
         time.sleep(5)
-        self.log_debug('end')
+        lg.debug('end')
 
 
 class ParserThread(CommonThread):
@@ -56,11 +57,11 @@ class ParserThread(CommonThread):
         self.add_argument('y')
         # self.add_argument('z')
         self.parse_args()
-        self.log_debug(self.params)
+        lg.debug(self.params)
         while True:
             inputs = self.inputs_available()
             for i in inputs:
-                self.log_debug(i)
+                lg.debug(i)
                 if i is None:
                     return
 

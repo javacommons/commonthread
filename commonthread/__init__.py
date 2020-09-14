@@ -4,6 +4,22 @@ import queue
 import threading
 
 
+class CommonThreadLogger:
+
+    def __init__(self):
+        pass
+
+    @classmethod
+    def setup_basic_logging(cls, level=logging.DEBUG, format='%(threadName)s: %(message)s'):
+        logging.basicConfig(level=level, format=format)
+
+    def debug(self, msg):
+        return logging.debug(msg)
+
+    def info(self, msg):
+        return logging.info(msg)
+
+
 class CommonThread(threading.Thread):
 
     def __init__(self, *args, **kwargs):
@@ -61,8 +77,8 @@ class CommonThread(threading.Thread):
             result.append(self.outq.get())
         return result
 
-    def log_debug(self, msg):
-        return logging.debug(msg)
+    # def log_debug(self, msg):
+    #     return logging.debug(msg)
 
     @classmethod
     def setup_basic_logging(cls, level=logging.DEBUG, format='%(threadName)s: %(message)s'):
