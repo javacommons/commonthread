@@ -80,15 +80,17 @@ class CommonThread(threading.Thread):
         return result
 
     @classmethod
-    def some_are_active(cls):
+    def some_are_active(cls, type=None):
+        if type is None:
+            type = CommonThread
         for thread in threading.enumerate():
-            if isinstance(thread, CommonThread):
+            if isinstance(thread, type):
                 return True
         return False
 
     @classmethod
-    def join_all(cls):
-        while CommonThread.some_are_active():
+    def join_all(cls, type=None):
+        while CommonThread.some_are_active(type):
             time.sleep(0.001)
         return None
 

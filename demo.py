@@ -26,7 +26,7 @@ def worker3(th, *args):
     th.add_argument('-w', action='store_true')
     th.add_argument('rest', nargs='*', help='file or directory')
     params = th.parse_args()
-    lg.debug(params)
+    lg.debug('params={}'.format(params))
     time.sleep(2)
     lg.debug('end')
 
@@ -50,11 +50,11 @@ class ParserThread(CommonThread):
         CommonThread.__init__(self, *args, **kwargs)
 
     def entry(self, *args):
-        self.add_argument('x')
+        self.add_argument('x', type=float)
         self.add_argument('y')
-        # self.add_argument('z')
         params = self.parse_args()
-        lg.debug(params)
+        lg.debug('params={}'.format(params))
+        time.sleep(4)
         result = 0
         while True:
             inputs = self.inputs_available()
@@ -92,6 +92,11 @@ for i in range(10):
 t2.send(None)
 
 print(CommonThread.some_are_active())
+
+CommonThread.join_all(type=WorkerThread)
+
+lg.debug('t1.result={}'.format(t1.result))
+lg.debug('t2.result={}'.format(t2.result))
 
 CommonThread.join_all()
 

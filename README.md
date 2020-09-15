@@ -31,7 +31,7 @@ def worker3(th, *args):
     th.add_argument('-w', action='store_true')
     th.add_argument('rest', nargs='*', help='file or directory')
     params = th.parse_args()
-    lg.debug(params)
+    lg.debug('params={}'.format(params))
     time.sleep(2)
     lg.debug('end')
 
@@ -55,11 +55,11 @@ class ParserThread(CommonThread):
         CommonThread.__init__(self, *args, **kwargs)
 
     def entry(self, *args):
-        self.add_argument('x')
+        self.add_argument('x', type=float)
         self.add_argument('y')
-        # self.add_argument('z')
         params = self.parse_args()
-        lg.debug(params)
+        lg.debug('params={}'.format(params))
+        time.sleep(4)
         result = 0
         while True:
             inputs = self.inputs_available()
@@ -98,6 +98,11 @@ t2.send(None)
 
 print(CommonThread.some_are_active())
 
+CommonThread.join_all(type=WorkerThread)
+
+lg.debug('t1.result={}'.format(t1.result))
+lg.debug('t2.result={}'.format(t2.result))
+
 CommonThread.join_all()
 
 lg.debug('t1.result={}'.format(t1.result))
@@ -118,10 +123,10 @@ t0@MyThread ==> THREE
 t1@worker1 ==> start
 t1@worker1 ==> (123, 'abc', 4.56)
 t1@worker1 ==> {'kw1': 1, 'kw2': 'abcxyz'}
-t2@ParserThread ==> Namespace(x='123', y='2017-09-01 12:12:00')
+t2@ParserThread ==> params=Namespace(x=123.0, y='2017-09-01 12:12:00')
 t3@worker3 ==> start
 t3@worker3 ==> ('install', '-z', 78.654321, 'abc', 'XYZ', 123, 456)
-t3@worker3 ==> Namespace(operation='install', rest=['123', '456'], w=False, x='abc', y='XYZ', z='78.654321')
+t3@worker3 ==> params=Namespace(operation='install', rest=['123', '456'], w=False, x='abc', y='XYZ', z='78.654321')
 MainThread ==> started
 MainThread ==> 0
 MainThread ==> 1
@@ -133,6 +138,11 @@ MainThread ==> 6
 MainThread ==> 7
 MainThread ==> 8
 MainThread ==> 9
+True
+t3@worker3 ==> end
+t1@worker1 ==> end
+MainThread ==> t1.result=1234
+MainThread ==> t2.result=None
 t2@ParserThread ==> 0
 t2@ParserThread ==> 1
 t2@ParserThread ==> 2
@@ -144,9 +154,6 @@ t2@ParserThread ==> 7
 t2@ParserThread ==> 8
 t2@ParserThread ==> 9
 t2@ParserThread ==> None
-True
-t3@worker3 ==> end
-t1@worker1 ==> end
 t0@MyThread ==> end
 MainThread ==> t1.result=1234
 MainThread ==> t2.result=45
