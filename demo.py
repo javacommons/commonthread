@@ -95,6 +95,9 @@ print(CommonThread.some_are_active())
 
 CommonThread.join_all(type=WorkerThread)
 
+print(CommonThread.some_are_active())
+print(CommonThread.some_are_active(type=WorkerThread))
+
 lg.debug('t1.result={}'.format(t1.result))
 lg.debug('t2.result={}'.format(t2.result))
 
