@@ -1,6 +1,10 @@
 from gooey import Gooey, GooeyParser
+from commonthread import *
 import sys
 import time
+
+CommonThreadLogger.setup_basic_logging()
+lg = CommonThreadLogger()
 
 program_message = \
     '''
@@ -45,7 +49,7 @@ def main():
     my_cool_parser.add_argument(
         "FileChooser", help=file_help_msg, widget="FileChooser",
         default='C:\\temp\\test.txt',
-        gooey_options={'default_dir': "c:\\temp", 'message': "選択してね!"})
+        gooey_options={'default_dir': "c:\\temp", 'message': "選択してね!", 'full_width': True})
     my_cool_parser.add_argument(
         "DirectoryChooser", help=file_help_msg, widget="DirChooser")
     my_cool_parser.add_argument(
@@ -79,7 +83,10 @@ def main():
     verbosity.add_argument('-q', '--quiet', dest='quiet',
                            action="store_true", help="Only output on error")
 
-    my_cool_parser.parse_args()
+    params = my_cool_parser.parse_args()
+    lg.debug('params={}'.format(params))
+    lg.debug('sys.argv={}'.format(sys.argv))
+    print('sys.argv={}'.format(sys.argv))
     display_message()
 
 
