@@ -3,7 +3,7 @@ import datetime
 import time
 
 
-CommonThreadLogger.setup_basic_logging(format='%(threadName)s ==> %(message)s')
+CommonThreadLogger.setup_basic(format='%(threadName)s ==> %(message)s')
 lg = CommonThreadLogger()
 
 

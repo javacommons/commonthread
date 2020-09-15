@@ -3,7 +3,7 @@ from commonthread import *
 import sys
 import time
 
-CommonThreadLogger.setup_basic_logging()
+CommonThreadLogger.setup_basic()
 lg = CommonThreadLogger()
 
 program_message = \
