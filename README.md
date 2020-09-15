@@ -7,6 +7,7 @@ from commonthread import *
 import datetime
 import time
 
+
 CommonThreadLogger.setup_basic_logging(format='%(threadName)s ==> %(message)s')
 lg = CommonThreadLogger()
 
@@ -15,9 +16,9 @@ def worker1(th, *args, **kwargs):
     lg.debug('start')
     lg.debug(args)
     lg.debug(kwargs)
-    th.output('from worker1')
     time.sleep(2)
     lg.debug('end')
+    return 1234
 
 
 def worker3(th, *args):
@@ -29,8 +30,8 @@ def worker3(th, *args):
     th.add_argument('-z', required=True)
     th.add_argument('-w', action='store_true')
     th.add_argument('rest', nargs='*', help='file or directory')
-    th.parse_args()
-    lg.debug(th.params)
+    params = th.parse_args()
+    lg.debug(params)
     time.sleep(2)
     lg.debug('end')
 
@@ -42,11 +43,8 @@ class MyThread(CommonThread):
 
     def entry(self, *args, **kwargs):
         lg.debug('Starting Thread named {}, args={}, kwargs={}'.format(self.name, args, kwargs))
-        self.outq.put(['this', 'is', 'array'])
-        lg.debug(self.args)
-        for i in self.args:
+        for i in args:
             lg.debug(i)
-            self.output(i)
         time.sleep(5)
         lg.debug('end')
 
@@ -60,14 +58,17 @@ class ParserThread(CommonThread):
         self.add_argument('x')
         self.add_argument('y')
         # self.add_argument('z')
-        self.parse_args()
-        lg.debug(self.params)
+        params = self.parse_args()
+        lg.debug(params)
+        result = 0
         while True:
             inputs = self.inputs_available()
             for i in inputs:
                 lg.debug(i)
                 if i is None:
-                    return
+                    return result
+                else:
+                    result += i
 
 
 lg.debug('starting')
@@ -91,17 +92,16 @@ t3.start()
 lg.debug('started')
 
 for i in range(10):
-    print(i)
+    lg.debug(i)
     t2.send(i)
 t2.send(None)
 
 print(CommonThread.some_are_active())
-while CommonThread.some_are_active():
-    time.sleep(0.001)
-    CommonThread.log_threads_output(use_print=True)
-CommonThread.log_threads_output(use_print=True)
 
 CommonThread.join_all()
+
+lg.debug('t1.result={}'.format(t1.result))
+lg.debug('t2.result={}'.format(t2.result))
 
 print(CommonThread.some_are_active())
 ```
@@ -112,7 +112,6 @@ print(CommonThread.some_are_active())
 C:\root\commonthread\venv\Scripts\python.exe C:/root/commonthread/demo.py
 MainThread ==> starting
 t0@MyThread ==> Starting Thread named t0@MyThread, args=('ONE', 'TWO', 'THREE'), kwargs={'required': True}
-t0@MyThread ==> ('ONE', 'TWO', 'THREE')
 t0@MyThread ==> ONE
 t0@MyThread ==> TWO
 t0@MyThread ==> THREE
@@ -124,36 +123,33 @@ t3@worker3 ==> start
 t3@worker3 ==> ('install', '-z', 78.654321, 'abc', 'XYZ', 123, 456)
 t3@worker3 ==> Namespace(operation='install', rest=['123', '456'], w=False, x='abc', y='XYZ', z='78.654321')
 MainThread ==> started
+MainThread ==> 0
+MainThread ==> 1
+MainThread ==> 2
+MainThread ==> 3
+MainThread ==> 4
+MainThread ==> 5
+MainThread ==> 6
+MainThread ==> 7
+MainThread ==> 8
+MainThread ==> 9
 t2@ParserThread ==> 0
 t2@ParserThread ==> 1
 t2@ParserThread ==> 2
-0
-1
-2
-3
-4
-5
 t2@ParserThread ==> 3
 t2@ParserThread ==> 4
-6
-7t2@ParserThread ==> 5
+t2@ParserThread ==> 5
 t2@ParserThread ==> 6
 t2@ParserThread ==> 7
-
-8
-9
 t2@ParserThread ==> 8
-True
-['this', 'is', 'array']
-ONE
-TWO
-THREE
-from worker1
 t2@ParserThread ==> 9
 t2@ParserThread ==> None
-t1@worker1 ==> end
+True
 t3@worker3 ==> end
+t1@worker1 ==> end
 t0@MyThread ==> end
+MainThread ==> t1.result=1234
+MainThread ==> t2.result=45
 False
 
 Process finished with exit code 0

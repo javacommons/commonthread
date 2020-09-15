@@ -31,12 +31,13 @@ class CommonThread(threading.Thread):
         self.outq = queue.Queue()
         self.parser = argparse.ArgumentParser()
         self.params = None
+        self.result = None
 
     def entry(self, *args, **kwargs):
         pass
 
     def run(self):
-        self.entry(*self.args, **self.kwargs)
+        self.result = self.entry(*self.args, **self.kwargs)
 
     def add_argument(self, *args, **kwargs):
         self.parser.add_argument(*args, **kwargs)
@@ -91,24 +92,6 @@ class CommonThread(threading.Thread):
             time.sleep(0.001)
         return None
 
-    @classmethod
-    def collect_threads_output(cls):
-        result = []
-        for thread in threading.enumerate():
-            if not isinstance(thread, CommonThread):
-                continue
-            result.extend(thread.receive_available())
-        return result
-
-    @classmethod
-    def log_threads_output(cls, use_print=False):
-        msg_list = CommonThread.collect_threads_output()
-        for msg in msg_list:
-            if use_print:
-                print(msg)
-            else:
-                logging.debug(msg)
-
 
 class WorkerThread(CommonThread):
 
@@ -117,5 +100,4 @@ class WorkerThread(CommonThread):
         self.worker_function = worker_function
 
     def run(self):
-        self.worker_function(self, *self.args, **self.kwargs)
-        return None
+        self.result = self.worker_function(self, *self.args, **self.kwargs)

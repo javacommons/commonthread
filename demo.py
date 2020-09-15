@@ -2,6 +2,7 @@ from commonthread import *
 import datetime
 import time
 
+
 CommonThreadLogger.setup_basic_logging(format='%(threadName)s ==> %(message)s')
 lg = CommonThreadLogger()
 
@@ -10,9 +11,9 @@ def worker1(th, *args, **kwargs):
     lg.debug('start')
     lg.debug(args)
     lg.debug(kwargs)
-    th.output('from worker1')
     time.sleep(2)
     lg.debug('end')
+    return 1234
 
 
 def worker3(th, *args):
@@ -24,8 +25,8 @@ def worker3(th, *args):
     th.add_argument('-z', required=True)
     th.add_argument('-w', action='store_true')
     th.add_argument('rest', nargs='*', help='file or directory')
-    th.parse_args()
-    lg.debug(th.params)
+    params = th.parse_args()
+    lg.debug(params)
     time.sleep(2)
     lg.debug('end')
 
@@ -37,11 +38,8 @@ class MyThread(CommonThread):
 
     def entry(self, *args, **kwargs):
         lg.debug('Starting Thread named {}, args={}, kwargs={}'.format(self.name, args, kwargs))
-        self.outq.put(['this', 'is', 'array'])
-        lg.debug(self.args)
-        for i in self.args:
+        for i in args:
             lg.debug(i)
-            self.output(i)
         time.sleep(5)
         lg.debug('end')
 
@@ -55,14 +53,17 @@ class ParserThread(CommonThread):
         self.add_argument('x')
         self.add_argument('y')
         # self.add_argument('z')
-        self.parse_args()
-        lg.debug(self.params)
+        params = self.parse_args()
+        lg.debug(params)
+        result = 0
         while True:
             inputs = self.inputs_available()
             for i in inputs:
                 lg.debug(i)
                 if i is None:
-                    return
+                    return result
+                else:
+                    result += i
 
 
 lg.debug('starting')
@@ -86,16 +87,15 @@ t3.start()
 lg.debug('started')
 
 for i in range(10):
-    print(i)
+    lg.debug(i)
     t2.send(i)
 t2.send(None)
 
 print(CommonThread.some_are_active())
-while CommonThread.some_are_active():
-    time.sleep(0.001)
-    CommonThread.log_threads_output(use_print=True)
-CommonThread.log_threads_output(use_print=True)
 
 CommonThread.join_all()
+
+lg.debug('t1.result={}'.format(t1.result))
+lg.debug('t2.result={}'.format(t2.result))
 
 print(CommonThread.some_are_active())
