@@ -59,6 +59,39 @@ class MyGooeyParser(GooeyParser):
             default=default,
             gooey_options={'default_dir': initial_folder, 'message': message, 'full_width': True})
 
+    def add_multi_file_chooser(self, name, help=None, default=None, message=None):
+        import os
+        initial_folder = None
+        if default:
+            if default.strip() == '':
+                initial_folder = os.path.expanduser('~')
+            else:
+                file_list = default.split(';')
+                old_value = os.path.abspath(file_list[0]).replace('/', '\\')
+                initial_folder = os.path.dirname(old_value)
+        else:
+            initial_folder = os.path.expanduser('~')
+        self.add_argument(
+            name, nargs='*', help=help, widget="MultiFileChooser",
+            default=default,
+            gooey_options={'default_dir': initial_folder, 'message': message, 'full_width': True})
+
+    def add_file_saver(self, name, help=None, default=None, message=None):
+        import os
+        initial_folder = None
+        if default:
+            if default.strip() == '':
+                initial_folder = os.path.expanduser('~')
+            else:
+                old_value = os.path.abspath(default).replace('/', '\\')
+                initial_folder = os.path.dirname(old_value)
+        else:
+            initial_folder = os.path.expanduser('~')
+        self.add_argument(
+            name, help=help, widget="FileSaver",
+            default=default,
+            gooey_options={'default_dir': initial_folder, 'message': message, 'full_width': True})
+
     def add_dir_chooser(self, name, help=None, default=None, message=None):
         import os
         initial_folder = None
@@ -88,23 +121,22 @@ def main():
                                     help=file_help_msg,
                                     default='C:\\temp\\test.txt',
                                     message='選択してね!')
-    # my_cool_parser.add_argument(
-    #     "FileChooser", help=file_help_msg, widget="FileChooser",
-    #     default='C:\\temp\\test.txt',
-    #     gooey_options={'default_dir': "c:\\temp", 'message': "選択してね!", 'full_width': True})
     my_cool_parser.add_dir_chooser("DirectoryChooser",
                                    help=file_help_msg,
                                    default='C:\\temp',
                                    message='選択してね!')
-    # my_cool_parser.add_argument(
-    #     "DirectoryChooser", help=file_help_msg, widget="DirChooser", default='C:\\temp',
-    #     gooey_options={'default_path': "c:\\temp", 'message': "選択してね!", 'full_width': True})
-    my_cool_parser.add_argument(
-        "FileSaver", help=file_help_msg, widget="FileSaver")
-    my_cool_parser.add_argument(
-        "MultiFileChooser", nargs='*', help=file_help_msg, widget="MultiFileChooser")
-    my_cool_parser.add_argument("directory", help="Directory to store output")
-
+    my_cool_parser.add_file_saver("FileSaver",
+                                  help=file_help_msg,
+                                  default='C:\\temp\\test2.txt',
+                                  message='選択してね!')
+    my_cool_parser.add_dir_chooser("directory",
+                                   help="Directory to store output",
+                                   default='C:\\temp',
+                                   message='選択してね!')
+    # my_cool_parser.add_multi_file_chooser("MultiFileChooser",
+    #                                       help=file_help_msg,
+    #                                       default='C:\\temp\\test3.txt;C:\\temp\\test4.txt',
+    #                                       message='選択してね!')
     my_cool_parser.add_argument('-d', '--duration', default=2,
                                 type=int, help='Duration (in seconds) of the program output')
     my_cool_parser.add_argument('-s', '--cron-schedule', type=int,
@@ -132,6 +164,7 @@ def main():
 
     params = my_cool_parser.parse_args()
     lg.debug('params={}'.format(params))
+    # lg.debug('params.MultiFileChooser={}'.format(params.MultiFileChooser))
     lg.debug('sys.argv={}'.format(sys.argv))
     print('sys.argv={}'.format(sys.argv))
     display_message()
