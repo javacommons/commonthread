@@ -43,7 +43,9 @@ def main():
     my_cool_parser = GooeyParser(description=desc)
 
     my_cool_parser.add_argument(
-        "FileChooser", help=file_help_msg, widget="FileChooser")
+        "FileChooser", help=file_help_msg, widget="FileChooser",
+        default='C:\\temp\\test.txt',
+        gooey_options={'default_dir': "c:\\temp", 'message': "選択してね!"})
     my_cool_parser.add_argument(
         "DirectoryChooser", help=file_help_msg, widget="DirChooser")
     my_cool_parser.add_argument(
