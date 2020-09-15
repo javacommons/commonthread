@@ -43,7 +43,7 @@ class MyGooeyParser(GooeyParser):
     def __init__(self):
         GooeyParser.__init__(self)
 
-    def add_filechooser(self, name, help=None, default=None, message=None):
+    def add_file_chooser(self, name, help=None, default=None, message=None):
         import os
         initial_folder = None
         if default:
@@ -59,6 +59,22 @@ class MyGooeyParser(GooeyParser):
             default=default,
             gooey_options={'default_dir': initial_folder, 'message': message, 'full_width': True})
 
+    def add_dir_chooser(self, name, help=None, default=None, message=None):
+        import os
+        initial_folder = None
+        if default:
+            if default.strip() == '':
+                initial_folder = os.path.expanduser('~')
+            else:
+                old_value = os.path.abspath(default).replace('/', '\\')
+                initial_folder = old_value
+        else:
+            initial_folder = os.path.expanduser('~')
+        self.add_argument(
+            name, help=help, widget="DirChooser",
+            default=default,
+            gooey_options={'default_path': initial_folder, 'message': message, 'full_width': True})
+
 
 @Gooey(dump_build_config=False, program_name="Widget Demo")
 def main():
@@ -68,16 +84,21 @@ def main():
     # my_cool_parser = GooeyParser(description=desc)
     my_cool_parser = MyGooeyParser()
 
-    my_cool_parser.add_filechooser("FileChooser",
-                                   help=file_help_msg,
-                                   default='C:\\temp\\test.txt',
-                                   message='選択してね!')
+    my_cool_parser.add_file_chooser("FileChooser",
+                                    help=file_help_msg,
+                                    default='C:\\temp\\test.txt',
+                                    message='選択してね!')
     # my_cool_parser.add_argument(
     #     "FileChooser", help=file_help_msg, widget="FileChooser",
     #     default='C:\\temp\\test.txt',
     #     gooey_options={'default_dir': "c:\\temp", 'message': "選択してね!", 'full_width': True})
-    my_cool_parser.add_argument(
-        "DirectoryChooser", help=file_help_msg, widget="DirChooser")
+    my_cool_parser.add_dir_chooser("DirectoryChooser",
+                                   help=file_help_msg,
+                                   default='C:\\temp',
+                                   message='選択してね!')
+    # my_cool_parser.add_argument(
+    #     "DirectoryChooser", help=file_help_msg, widget="DirChooser", default='C:\\temp',
+    #     gooey_options={'default_path': "c:\\temp", 'message': "選択してね!", 'full_width': True})
     my_cool_parser.add_argument(
         "FileSaver", help=file_help_msg, widget="FileSaver")
     my_cool_parser.add_argument(
