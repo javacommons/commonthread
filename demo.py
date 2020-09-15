@@ -7,6 +7,34 @@ CommonThreadLogger.setup_basic_logging(format='%(threadName)s ==> %(message)s')
 lg = CommonThreadLogger()
 
 
+# source https://techacademy.jp/magazine/28155
+def factorial_worker(th, n):
+    if n <= 1:
+        return 1
+    else:
+        return n*factorial_worker(th, n-1)
+
+
+# source https://techacademy.jp/magazine/28155
+def fibonacci_worker(th, n):
+    if n <= 2:
+        return 1
+    else:
+        return fibonacci_worker(th, n - 2) + fibonacci_worker(th, n - 1)
+
+
+class FibonacciThread(CommonThread):
+
+    def __init__(self, *args, **kwargs):
+        CommonThread.__init__(self, *args, **kwargs)
+
+    def entry(self, n):
+        if n <= 2:
+            return 1
+        else:
+            return self.entry(n - 2) + self.entry(n - 1)
+
+
 def worker1(th, *args, **kwargs):
     lg.debug('start')
     lg.debug(args)
@@ -67,6 +95,23 @@ class ParserThread(CommonThread):
 
 
 lg.debug('starting')
+
+tfac = WorkerThread(factorial_worker, 6)
+tfac.start()
+CommonThread.join_all()
+lg.debug('tfac.result={}'.format(tfac.result))
+
+tfib = WorkerThread(fibonacci_worker, 36)
+tfib.start()
+CommonThread.join_all()
+lg.debug('tfib.result={}'.format(tfib.result))
+lg.debug('tfib.duration={}'.format(tfib.duration))
+
+tfib2 = FibonacciThread(36)
+tfib2.start()
+CommonThread.join_all()
+lg.debug('tfib2.result={}'.format(tfib2.result))
+lg.debug('tfib2.duration={}'.format(tfib2.duration))
 
 t0 = MyThread('ONE', 'TWO', 'THREE', required=True)
 t0.name = 't0@MyThread'
