@@ -2,6 +2,7 @@ import argparse
 import logging
 import queue
 import threading
+import time
 
 
 class CommonThreadLogger:
@@ -83,6 +84,12 @@ class CommonThread(threading.Thread):
             if isinstance(thread, CommonThread):
                 return True
         return False
+
+    @classmethod
+    def join_all(cls):
+        while CommonThread.some_are_active():
+            time.sleep(0.001)
+        return None
 
     @classmethod
     def collect_threads_output(cls):

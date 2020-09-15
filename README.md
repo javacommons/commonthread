@@ -101,6 +101,8 @@ while CommonThread.some_are_active():
     CommonThread.log_threads_output(use_print=True)
 CommonThread.log_threads_output(use_print=True)
 
+CommonThread.join_all()
+
 print(CommonThread.some_are_active())
 ```
 
@@ -119,34 +121,34 @@ t1@worker1 ==> (123, 'abc', 4.56)
 t1@worker1 ==> {'kw1': 1, 'kw2': 'abcxyz'}
 t2@ParserThread ==> Namespace(x='123', y='2017-09-01 12:12:00')
 t3@worker3 ==> start
+t3@worker3 ==> ('install', '-z', 78.654321, 'abc', 'XYZ', 123, 456)
+t3@worker3 ==> Namespace(operation='install', rest=['123', '456'], w=False, x='abc', y='XYZ', z='78.654321')
+MainThread ==> started
+t2@ParserThread ==> 0
+t2@ParserThread ==> 1
+t2@ParserThread ==> 2
 0
 1
 2
 3
 4
 5
+t2@ParserThread ==> 3
+t2@ParserThread ==> 4
 6
-7
+7t2@ParserThread ==> 5
+t2@ParserThread ==> 6
+t2@ParserThread ==> 7
+
 8
 9
+t2@ParserThread ==> 8
 True
 ['this', 'is', 'array']
 ONE
 TWO
 THREE
 from worker1
-MainThread ==> started
-t3@worker3 ==> ('install', '-z', 78.654321, 'abc', 'XYZ', 123, 456)
-t2@ParserThread ==> 0
-t3@worker3 ==> Namespace(operation='install', rest=['123', '456'], w=False, x='abc', y='XYZ', z='78.654321')
-t2@ParserThread ==> 1
-t2@ParserThread ==> 2
-t2@ParserThread ==> 3
-t2@ParserThread ==> 4
-t2@ParserThread ==> 5
-t2@ParserThread ==> 6
-t2@ParserThread ==> 7
-t2@ParserThread ==> 8
 t2@ParserThread ==> 9
 t2@ParserThread ==> None
 t1@worker1 ==> end

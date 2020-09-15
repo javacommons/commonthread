@@ -96,4 +96,6 @@ while CommonThread.some_are_active():
     CommonThread.log_threads_output(use_print=True)
 CommonThread.log_threads_output(use_print=True)
 
+CommonThread.join_all()
+
 print(CommonThread.some_are_active())
