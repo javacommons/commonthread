@@ -31,7 +31,7 @@ class CommonThread(threading.Thread):
         self.outq = queue.Queue()
         self.parser = argparse.ArgumentParser()
         self.params = None
-        self.duration = 0.0
+        self.elapsed = 0.0
         self.result = None
 
     def entry(self, *args, **kwargs):
@@ -41,7 +41,7 @@ class CommonThread(threading.Thread):
         t0 = time.time()
         self.result = self.entry(*self.args, **self.kwargs)
         t1 = time.time()
-        self.duration = t1 - t0
+        self.elapsed = t1 - t0
 
     def add_argument(self, *args, **kwargs):
         self.parser.add_argument(*args, **kwargs)
@@ -109,4 +109,4 @@ class WorkerThread(CommonThread):
         t0 = time.time()
         self.result = self.worker_function(self, *self.args, **self.kwargs)
         t1 = time.time()
-        self.duration = t1 - t0
+        self.elapsed = t1 - t0

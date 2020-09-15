@@ -105,13 +105,13 @@ tfib = WorkerThread(fibonacci_worker, 36)
 tfib.start()
 CommonThread.join_all()
 lg.debug('tfib.result={}'.format(tfib.result))
-lg.debug('tfib.duration={}'.format(tfib.duration))
+lg.debug('tfib.elapsed={}'.format(tfib.elapsed))
 
 tfib2 = FibonacciThread(36)
 tfib2.start()
 CommonThread.join_all()
 lg.debug('tfib2.result={}'.format(tfib2.result))
-lg.debug('tfib2.duration={}'.format(tfib2.duration))
+lg.debug('tfib2.elapsed={}'.format(tfib2.elapsed))
 
 t0 = MyThread('ONE', 'TWO', 'THREE', required=True)
 t0.name = 't0@MyThread'
