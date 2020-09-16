@@ -23,6 +23,7 @@ def fibonacci_worker(th: WorkerThread, n: int):
         return fibonacci_worker(th, n - 2) + fibonacci_worker(th, n - 1)
 
 
+# source https://techacademy.jp/magazine/28155
 class FibonacciThread(CommonThread):
 
     def entry(self, n: int):
