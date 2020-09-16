@@ -64,8 +64,8 @@ def worker3(th: WorkerThread, *args):
 
 class MyThread(CommonThread):
 
-    def entry(self, *args, **kwargs):
-        lg.debug('Starting Thread named {}, args={}, kwargs={}'.format(self.name, args, kwargs))
+    def entry(self, *args, required=False):
+        lg.debug('Starting Thread named {}, args={}, required={}'.format(self.name, args, required))
         for i in args:
             lg.debug(i)
         time.sleep(5)
@@ -174,10 +174,10 @@ C:\root\commonthread\venv\Scripts\python.exe C:/root/commonthread/demo.py
 MainThread ==> starting
 MainThread ==> tfac.result=720
 MainThread ==> tfib.result=14930352
-MainThread ==> tfib.elapsed=4.03464674949646
+MainThread ==> tfib.elapsed=3.5365500450134277
 MainThread ==> tfib2.result=14930352
-MainThread ==> tfib2.elapsed=4.666651487350464
-t0@MyThread ==> Starting Thread named t0@MyThread, args=('ONE', 'TWO', 'THREE'), kwargs={'required': True}
+MainThread ==> tfib2.elapsed=4.415233850479126
+t0@MyThread ==> Starting Thread named t0@MyThread, args=('ONE', 'TWO', 'THREE'), required=True
 t0@MyThread ==> ONE
 t0@MyThread ==> TWO
 t0@MyThread ==> THREE
@@ -227,17 +227,17 @@ MainThread ==> t1.result=1234
 MainThread ==> t2.result=45
 True
 False
-[Thread(name=t0@MyThread, result=None, elapsed=0.0, args=('ONE', 'TWO', 'THREE'), kwargs={'required': True}, params={})]
+[MyThread(name=t0@MyThread, result=None, elapsed=0.0, args=('ONE', 'TWO', 'THREE'), kwargs={'required': True}, params={})]
 t0@MyThread ==> end
 MainThread ==> t1.result=1234
 MainThread ==> t2.result=45
-MainThread ==> Thread(name=tfac, result=720, elapsed=0.0, args=(6,), kwargs={}, params={})
-MainThread ==> Thread(name=tfib, result=14930352, elapsed=4.03464674949646, args=(36,), kwargs={}, params={})
-MainThread ==> Thread(name=tfib2, result=14930352, elapsed=4.666651487350464, args=(36,), kwargs={}, params={})
-MainThread ==> Thread(name=t0@MyThread, result=None, elapsed=5.012861251831055, args=('ONE', 'TWO', 'THREE'), kwargs={'required': True}, params={})
-MainThread ==> Thread(name=t1@worker1, result=1234, elapsed=2.0109004974365234, args=(123, 'abc', 4.56), kwargs={'kw1': 1, 'kw2': 'abcxyz'}, params={'abc': 1.23})
-MainThread ==> Thread(name=t2@ParserThread, result=45, elapsed=1.3534178733825684, args=(123, datetime.datetime(2017, 9, 1, 12, 12)), kwargs={}, params={'x': 123.0, 'y': '2017-09-01 12:12:00'})
-MainThread ==> Thread(name=t3@worker3, result=None, elapsed=2.012187957763672, args=('install', '-z', 78.654321, 'abc', 'XYZ', 123, 456), kwargs={}, params={'operation': 'install', 'x': 'abc', 'y': 'XYZ', 'z': '78.654321', 'w': False, 'rest': ['123', '456']})
+MainThread ==> WorkerThread(name=tfac, result=720, elapsed=0.0, args=(6,), kwargs={}, params={})
+MainThread ==> WorkerThread(name=tfib, result=14930352, elapsed=3.5365500450134277, args=(36,), kwargs={}, params={})
+MainThread ==> FibonacciThread(name=tfib2, result=14930352, elapsed=4.415233850479126, args=(36,), kwargs={}, params={})
+MainThread ==> MyThread(name=t0@MyThread, result=None, elapsed=5.009608030319214, args=('ONE', 'TWO', 'THREE'), kwargs={'required': True}, params={})
+MainThread ==> WorkerThread(name=t1@worker1, result=1234, elapsed=2.010605573654175, args=(123, 'abc', 4.56), kwargs={'kw1': 1, 'kw2': 'abcxyz'}, params={'abc': 1.23})
+MainThread ==> ParserThread(name=t2@ParserThread, result=45, elapsed=1.3893027305603027, args=(123, datetime.datetime(2017, 9, 1, 12, 12)), kwargs={}, params={'x': 123.0, 'y': '2017-09-01 12:12:00'})
+MainThread ==> WorkerThread(name=t3@worker3, result=None, elapsed=2.0086007118225098, args=('install', '-z', 78.654321, 'abc', 'XYZ', 123, 456), kwargs={}, params={'operation': 'install', 'x': 'abc', 'y': 'XYZ', 'z': '78.654321', 'w': False, 'rest': ['123', '456']})
 False
 []
 

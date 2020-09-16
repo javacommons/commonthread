@@ -20,13 +20,19 @@ class RealWorker:
 
 class MyThread(CommonThread):
 
-    def entry(self, x: int, y: int):
+    def __init__(self, x, y):
+        CommonThread.__init__(self)
+        self.setDaemon(True)
+        self.params['x'] = x
+        self.params['y'] = y
+
+    # def entry(self, x: int, y: int):
+    def entry(self):
         lg.debug('start')
         lg.debug('self.name={}'.format(self.name))
-        lg.debug('x={}'.format(x))
-        lg.debug('y={}'.format(y))
+        lg.debug('this.params={}')
         time.sleep(5)
-        worker = RealWorker(self, x, y)
+        worker = RealWorker(self, self.params['x'], self.params['y'])
         result = worker.calc()
         lg.debug('end')
         return result

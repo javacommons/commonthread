@@ -10,7 +10,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='commonthread',
-    version='0.21',
+    version='0.22',
     description='Common Threading Library',
     url='https://github.com/javacommons/commonthread',
     author='javacommons',

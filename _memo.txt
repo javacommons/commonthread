@@ -1,0 +1,8 @@
+multithreading - How to get the return value from a thread in python? - Stack Overflow https://stackoverflow.com/questions/6893968/how-to-get-the-return-value-from-a-thread-in-python
+https://stackoverflow.com/questions/6893968/how-to-get-the-return-value-from-a-thread-in-python
+
+pip install -U commonthread
+
+class CommonThreadLogger:
+class CommonThread(threading.Thread):
+class WorkerThread(CommonThread):

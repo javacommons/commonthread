@@ -59,8 +59,8 @@ def worker3(th: WorkerThread, *args):
 
 class MyThread(CommonThread):
 
-    def entry(self, *args, **kwargs):
-        lg.debug('Starting Thread named {}, args={}, kwargs={}'.format(self.name, args, kwargs))
+    def entry(self, *args, required=False):
+        lg.debug('Starting Thread named {}, args={}, required={}'.format(self.name, args, required))
         for i in args:
             lg.debug(i)
         time.sleep(5)

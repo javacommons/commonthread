@@ -34,7 +34,8 @@ class CommonThread(threading.Thread):
         self.result = None
 
     def __repr__(self):
-        return 'Thread(name={}, result={}, elapsed={}, args={}, kwargs={}, params={})'.format(
+        return '{}(name={}, result={}, elapsed={}, args={}, kwargs={}, params={})'.format(
+            self.__class__.__name__,
             self.name, self.result, self.elapsed, self.args, self.kwargs, self.params)
 
     def entry(self, *args, **kwargs):
