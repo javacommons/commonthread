@@ -95,17 +95,20 @@ class ParserThread(CommonThread):
 lg.debug('starting')
 
 tfac = WorkerThread(factorial_worker, 6)
+tfac.name = 'tfac'
 tfac.start()
 CommonThread.join_all()
 lg.debug('tfac.result={}'.format(tfac.result))
 
 tfib = WorkerThread(fibonacci_worker, 36)
+tfib.name = 'tfib'
 tfib.start()
 CommonThread.join_all()
 lg.debug('tfib.result={}'.format(tfib.result))
 lg.debug('tfib.elapsed={}'.format(tfib.elapsed))
 
 tfib2 = FibonacciThread(36)
+tfib2.name = 'tfib2'
 tfib2.start()
 CommonThread.join_all()
 lg.debug('tfib2.result={}'.format(tfib2.result))
@@ -150,6 +153,11 @@ CommonThread.join_all()
 lg.debug('t1.result={}'.format(t1.result))
 lg.debug('t2.result={}'.format(t2.result))
 
+
+lg.debug(tfac)
+lg.debug(tfib)
+lg.debug(tfib2)
+lg.debug(t0)
 lg.debug(t1)
 lg.debug(t2)
 lg.debug(t3)
@@ -164,9 +172,9 @@ C:\root\commonthread\venv\Scripts\python.exe C:/root/commonthread/demo.py
 MainThread ==> starting
 MainThread ==> tfac.result=720
 MainThread ==> tfib.result=14930352
-MainThread ==> tfib.elapsed=3.8853442668914795
+MainThread ==> tfib.elapsed=4.028362512588501
 MainThread ==> tfib2.result=14930352
-MainThread ==> tfib2.elapsed=4.307960748672485
+MainThread ==> tfib2.elapsed=4.498629331588745
 t0@MyThread ==> Starting Thread named t0@MyThread, args=('ONE', 'TWO', 'THREE'), kwargs={'required': True}
 t0@MyThread ==> ONE
 t0@MyThread ==> TWO
@@ -220,9 +228,13 @@ False
 t0@MyThread ==> end
 MainThread ==> t1.result=1234
 MainThread ==> t2.result=45
-MainThread ==> Thread(name=t1@worker1, args=(123, 'abc', 4.56), kwargs={'kw1': 1, 'kw2': 'abcxyz'}, params={'abc': 1.23}, result=1234, elapsed=2.00205397605896)
-MainThread ==> Thread(name=t2@ParserThread, args=(123, datetime.datetime(2017, 9, 1, 12, 12)), kwargs={}, params={}, result=45, elapsed=1.3926126956939697)
-MainThread ==> Thread(name=t3@worker3, args=('install', '-z', 78.654321, 'abc', 'XYZ', 123, 456), kwargs={}, params=Namespace(operation='install', rest=['123', '456'], w=False, x='abc', y='XYZ', z='78.654321'), result=None, elapsed=2.0054287910461426)
+MainThread ==> Thread(name=tfac, result=720, elapsed=0.0, args=(6,), kwargs={}, params={})
+MainThread ==> Thread(name=tfib, result=14930352, elapsed=4.028362512588501, args=(36,), kwargs={}, params={})
+MainThread ==> Thread(name=tfib2, result=14930352, elapsed=4.498629331588745, args=(36,), kwargs={}, params={})
+MainThread ==> Thread(name=t0@MyThread, result=None, elapsed=5.007755279541016, args=('ONE', 'TWO', 'THREE'), kwargs={'required': True}, params={})
+MainThread ==> Thread(name=t1@worker1, result=1234, elapsed=2.0065853595733643, args=(123, 'abc', 4.56), kwargs={'kw1': 1, 'kw2': 'abcxyz'}, params={'abc': 1.23})
+MainThread ==> Thread(name=t2@ParserThread, result=45, elapsed=1.3842976093292236, args=(123, datetime.datetime(2017, 9, 1, 12, 12)), kwargs={}, params={})
+MainThread ==> Thread(name=t3@worker3, result=None, elapsed=2.008103609085083, args=('install', '-z', 78.654321, 'abc', 'XYZ', 123, 456), kwargs={}, params=Namespace(operation='install', rest=['123', '456'], w=False, x='abc', y='XYZ', z='78.654321'))
 False
 
 Process finished with exit code 0

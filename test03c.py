@@ -8,8 +8,7 @@ lg.debug('hello!')
 
 
 class MyThread(CommonThread):
-    def __init__(self, *args, **kwargs):
-        CommonThread.__init__(self, *args, **kwargs)
+
     def entry(self, x, y, **kwargs):
         lg.debug('start')
         lg.debug('self.name={}'.format(self.name))

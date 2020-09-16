@@ -8,7 +8,7 @@ lg.setup_basic(format='%(threadName)s ==> %(message)s')
 
 
 # source https://techacademy.jp/magazine/28155
-def factorial_worker(th, n):
+def factorial_worker(th: WorkerThread, n: int):
     if n <= 1:
         return 1
     else:
@@ -16,7 +16,7 @@ def factorial_worker(th, n):
 
 
 # source https://techacademy.jp/magazine/28155
-def fibonacci_worker(th, n):
+def fibonacci_worker(th: WorkerThread, n: int):
     if n <= 2:
         return 1
     else:
@@ -25,14 +25,14 @@ def fibonacci_worker(th, n):
 
 class FibonacciThread(CommonThread):
 
-    def entry(self, n):
+    def entry(self, n: int):
         if n <= 2:
             return 1
         else:
             return self.entry(n - 2) + self.entry(n - 1)
 
 
-def worker1(th, *args, **kwargs):
+def worker1(th: WorkerThread, *args, **kwargs):
     lg.debug('start')
     lg.debug(args)
     lg.debug(kwargs)
@@ -42,7 +42,7 @@ def worker1(th, *args, **kwargs):
     return 1234
 
 
-def worker3(th, *args):
+def worker3(th: WorkerThread, *args):
     lg.debug('start')
     lg.debug(args)
     th.add_argument('operation', choices=['install', 'uninstall', 'update'], help='type of operation')
