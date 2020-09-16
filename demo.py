@@ -90,17 +90,20 @@ class ParserThread(CommonThread):
 lg.debug('starting')
 
 tfac = WorkerThread(factorial_worker, 6)
+tfac.name = 'tfac'
 tfac.start()
 CommonThread.join_all()
 lg.debug('tfac.result={}'.format(tfac.result))
 
 tfib = WorkerThread(fibonacci_worker, 36)
+tfib.name = 'tfib'
 tfib.start()
 CommonThread.join_all()
 lg.debug('tfib.result={}'.format(tfib.result))
 lg.debug('tfib.elapsed={}'.format(tfib.elapsed))
 
 tfib2 = FibonacciThread(36)
+tfib2.name = 'tfib2'
 tfib2.start()
 CommonThread.join_all()
 lg.debug('tfib2.result={}'.format(tfib2.result))
@@ -145,6 +148,11 @@ CommonThread.join_all()
 lg.debug('t1.result={}'.format(t1.result))
 lg.debug('t2.result={}'.format(t2.result))
 
+
+lg.debug(tfac)
+lg.debug(tfib)
+lg.debug(tfib2)
+lg.debug(t0)
 lg.debug(t1)
 lg.debug(t2)
 lg.debug(t3)
