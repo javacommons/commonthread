@@ -25,20 +25,11 @@ def fibonacci_worker(th, n):
 
 class FibonacciThread(CommonThread):
 
-    def __init__(self, *args, **kwargs):
-        CommonThread.__init__(self, *args, **kwargs)
-
     def entry(self, n):
         if n <= 2:
             return 1
         else:
             return self.entry(n - 2) + self.entry(n - 1)
-
-
-class FibonacciThread2(WorkerThread):
-
-    def __init__(self, *args, **kwargs):
-        WorkerThread.__init__(self, fibonacci_worker, *args, **kwargs)
 
 
 def worker1(th, *args, **kwargs):
@@ -67,9 +58,6 @@ def worker3(th, *args):
 
 class MyThread(CommonThread):
 
-    def __init__(self, *args, **kwargs):
-        CommonThread.__init__(self, *args, **kwargs)
-
     def entry(self, *args, **kwargs):
         lg.debug('Starting Thread named {}, args={}, kwargs={}'.format(self.name, args, kwargs))
         for i in args:
@@ -79,9 +67,6 @@ class MyThread(CommonThread):
 
 
 class ParserThread(CommonThread):
-
-    def __init__(self, *args, **kwargs):
-        CommonThread.__init__(self, *args, **kwargs)
 
     def entry(self, *args):
         self.add_argument('x', type=float)
@@ -118,12 +103,6 @@ tfib2.start()
 CommonThread.join_all()
 lg.debug('tfib2.result={}'.format(tfib2.result))
 lg.debug('tfib2.elapsed={}'.format(tfib2.elapsed))
-
-tfib3 = FibonacciThread2(36)
-tfib3.start()
-CommonThread.join_all()
-lg.debug('tfib3.result={}'.format(tfib3.result))
-lg.debug('tfib3.elapsed={}'.format(tfib3.elapsed))
 
 t0 = MyThread('ONE', 'TWO', 'THREE', required=True)
 t0.name = 't0@MyThread'
