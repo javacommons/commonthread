@@ -6,3 +6,5 @@ pip install -U commonthread
 class CommonThreadLogger:
 class CommonThread(threading.Thread):
 class WorkerThread(CommonThread):
+
+# delete this line!
