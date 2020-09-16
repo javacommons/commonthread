@@ -106,6 +106,16 @@ class CommonThread(threading.Thread):
             time.sleep(0.001)
         return None
 
+    @classmethod
+    def list_active(cls, type=None):
+        if type is None:
+            type = CommonThread
+        result = []
+        for thread in threading.enumerate():
+            if isinstance(thread, type):
+                result.append(thread)
+        return result
+
 
 class WorkerThread(CommonThread):
 
