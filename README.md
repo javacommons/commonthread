@@ -78,10 +78,11 @@ class ParserThread(CommonThread):
         self.add_argument('y')
         params = self.parse_args()
         lg.debug('params={}'.format(params))
-        time.sleep(4)
         result = 0
         while True:
             inputs = self.inputs_available()
+            if inputs:
+                lg.debug(inputs)
             for i in inputs:
                 lg.debug(i)
                 if i is None:
@@ -128,6 +129,7 @@ t3.start()
 lg.debug('started')
 
 for i in range(10):
+    time.sleep(0.1)
     lg.debug(i)
     t2.send(i)
 t2.send(None)
@@ -157,10 +159,9 @@ C:\root\commonthread\venv\Scripts\python.exe C:/root/commonthread/demo.py
 MainThread ==> starting
 MainThread ==> tfac.result=720
 MainThread ==> tfib.result=14930352
-MainThread ==> tfib.elapsed=3.748546600341797
-True
+MainThread ==> tfib.elapsed=3.5786149501800537
 MainThread ==> tfib2.result=14930352
-MainThread ==> tfib2.elapsed=4.430355548858643
+MainThread ==> tfib2.elapsed=4.179480791091919
 t0@MyThread ==> Starting Thread named t0@MyThread, args=('ONE', 'TWO', 'THREE'), kwargs={'required': True}
 t0@MyThread ==> ONE
 t0@MyThread ==> TWO
@@ -174,19 +175,47 @@ t3@worker3 ==> ('install', '-z', 78.654321, 'abc', 'XYZ', 123, 456)
 t3@worker3 ==> params=Namespace(operation='install', rest=['123', '456'], w=False, x='abc', y='XYZ', z='78.654321')
 MainThread ==> started
 MainThread ==> 0
+t2@ParserThread ==> [0]
+t2@ParserThread ==> 0
 MainThread ==> 1
+t2@ParserThread ==> [1]
+t2@ParserThread ==> 1
 MainThread ==> 2
+t2@ParserThread ==> [2]
+t2@ParserThread ==> 2
 MainThread ==> 3
+t2@ParserThread ==> [3]
+t2@ParserThread ==> 3
 MainThread ==> 4
+t2@ParserThread ==> [4]
+t2@ParserThread ==> 4
 MainThread ==> 5
+t2@ParserThread ==> [5]
+t2@ParserThread ==> 5
 MainThread ==> 6
+t2@ParserThread ==> [6]
+t2@ParserThread ==> 6
 MainThread ==> 7
+t2@ParserThread ==> [7]
+t2@ParserThread ==> 7
 MainThread ==> 8
+t2@ParserThread ==> [8]
+t2@ParserThread ==> 8
 MainThread ==> 9
+t2@ParserThread ==> [9, None]
+t2@ParserThread ==> 9
+t2@ParserThread ==> None
+True
 t1@worker1 ==> end
 t3@worker3 ==> end
 MainThread ==> t1.result=1234
-MainThread ==> t2.result=None
+MainThread ==> t2.result=45
 True
 False
+False
+t0@MyThread ==> end
+MainThread ==> t1.result=1234
+MainThread ==> t2.result=45
+
+Process finished with exit code 0
 ```

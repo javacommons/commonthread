@@ -10,7 +10,7 @@ class CommonThreadLogger:
     def __init__(self):
         pass
 
-    def setup_basic(cls, level=logging.DEBUG, format='%(threadName)s: %(message)s'):
+    def setup_basic(cls, format='%(threadName)s: %(message)s', level=logging.DEBUG):
         logging.basicConfig(level=level, format=format)
 
     def debug(self, msg):
@@ -63,8 +63,11 @@ class CommonThread(threading.Thread):
     def inputs_available(self):
         assert threading.current_thread() == self
         result = []
-        while not self.inq.empty():
-            result.append(self.inq.get())
+        try:
+            while True:
+                result.append(self.inq.get(block=False))
+        except queue.Empty:
+            pass
         return result
 
     def send(self, item, block=True, timeout=None):
@@ -78,8 +81,11 @@ class CommonThread(threading.Thread):
     def receive_available(self):
         assert threading.current_thread() != self
         result = []
-        while not self.outq.empty():
-            result.append(self.outq.get())
+        try:
+            while True:
+                result.append(self.outq.get(block=False))
+        except queue.Empty:
+            pass
         return result
 
     @classmethod

@@ -73,10 +73,11 @@ class ParserThread(CommonThread):
         self.add_argument('y')
         params = self.parse_args()
         lg.debug('params={}'.format(params))
-        time.sleep(4)
         result = 0
         while True:
             inputs = self.inputs_available()
+            if inputs:
+                lg.debug(inputs)
             for i in inputs:
                 lg.debug(i)
                 if i is None:
@@ -123,6 +124,7 @@ t3.start()
 lg.debug('started')
 
 for i in range(10):
+    time.sleep(0.1)
     lg.debug(i)
     t2.send(i)
 t2.send(None)
