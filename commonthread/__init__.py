@@ -10,7 +10,6 @@ class CommonThreadLogger:
     def __init__(self):
         pass
 
-    @classmethod
     def setup_basic(cls, level=logging.DEBUG, format='%(threadName)s: %(message)s'):
         logging.basicConfig(level=level, format=format)
 

@@ -2,8 +2,8 @@ from commonthread import *
 import time
 
 
-CommonThreadLogger.setup_basic()
 lg = CommonThreadLogger()
+lg.setup_basic()
 lg.debug('hello!')
 
 

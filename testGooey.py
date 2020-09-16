@@ -3,8 +3,8 @@ from commonthread import *
 import sys
 import time
 
-CommonThreadLogger.setup_basic()
 lg = CommonThreadLogger()
+lg.setup_basic()
 
 program_message = \
     '''

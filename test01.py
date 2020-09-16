@@ -1,6 +1,6 @@
 from commonthread import *
 
 
-CommonThreadLogger.setup_basic()
 lg = CommonThreadLogger()
+lg.setup_basic()
 lg.debug('hello!')

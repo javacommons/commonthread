@@ -3,8 +3,8 @@ import datetime
 import time
 
 
-CommonThreadLogger.setup_basic(format='%(threadName)s ==> %(message)s')
 lg = CommonThreadLogger()
+lg.setup_basic(format='%(threadName)s ==> %(message)s')
 
 
 # source https://techacademy.jp/magazine/28155
