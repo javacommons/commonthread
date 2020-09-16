@@ -8,8 +8,8 @@ import datetime
 import time
 
 
-CommonThreadLogger.setup_basic(format='%(threadName)s ==> %(message)s')
 lg = CommonThreadLogger()
+lg.setup_basic(format='%(threadName)s ==> %(message)s')
 
 
 # source https://techacademy.jp/magazine/28155
@@ -157,9 +157,10 @@ C:\root\commonthread\venv\Scripts\python.exe C:/root/commonthread/demo.py
 MainThread ==> starting
 MainThread ==> tfac.result=720
 MainThread ==> tfib.result=14930352
-MainThread ==> tfib.elapsed=3.65222430229187
+MainThread ==> tfib.elapsed=3.748546600341797
+True
 MainThread ==> tfib2.result=14930352
-MainThread ==> tfib2.elapsed=4.4342474937438965
+MainThread ==> tfib2.elapsed=4.430355548858643
 t0@MyThread ==> Starting Thread named t0@MyThread, args=('ONE', 'TWO', 'THREE'), kwargs={'required': True}
 t0@MyThread ==> ONE
 t0@MyThread ==> TWO
@@ -182,28 +183,10 @@ MainThread ==> 6
 MainThread ==> 7
 MainThread ==> 8
 MainThread ==> 9
-True
-t3@worker3 ==> end
 t1@worker1 ==> end
+t3@worker3 ==> end
 MainThread ==> t1.result=1234
 MainThread ==> t2.result=None
 True
 False
-t2@ParserThread ==> 0
-t2@ParserThread ==> 1
-t2@ParserThread ==> 2
-t2@ParserThread ==> 3
-t2@ParserThread ==> 4
-t2@ParserThread ==> 5
-t2@ParserThread ==> 6
-t2@ParserThread ==> 7
-t2@ParserThread ==> 8
-t2@ParserThread ==> 9
-t2@ParserThread ==> None
-t0@MyThread ==> end
-MainThread ==> t1.result=1234
-MainThread ==> t2.result=45
-False
-
-Process finished with exit code 0
 ```
