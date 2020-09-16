@@ -29,9 +29,13 @@ class CommonThread(threading.Thread):
         self.inq = queue.Queue()
         self.outq = queue.Queue()
         self.parser = argparse.ArgumentParser()
-        self.params = None
+        self.params = {}
         self.elapsed = 0.0
         self.result = None
+
+    def __repr__(self):
+        return 'Thread(name={}, args={}, kwargs={}, params={}, result={}, elapsed={})'.format(
+            self.name, self.args, self.kwargs, self.params, self.result, self.elapsed)
 
     def entry(self, *args, **kwargs):
         pass
@@ -49,8 +53,7 @@ class CommonThread(threading.Thread):
         str_array = []
         for p in self.args:
             str_array.append(str(p))
-        self.params = self.parser.parse_args(str_array)
-        return self.params
+        return self.parser.parse_args(str_array)
 
     def output(self, item, block=True, timeout=None):
         assert threading.current_thread() == self

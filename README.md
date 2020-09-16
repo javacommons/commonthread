@@ -41,6 +41,7 @@ def worker1(th, *args, **kwargs):
     lg.debug('start')
     lg.debug(args)
     lg.debug(kwargs)
+    th.params["abc"] = 1.23
     time.sleep(2)
     lg.debug('end')
     return 1234
@@ -55,8 +56,8 @@ def worker3(th, *args):
     th.add_argument('-z', required=True)
     th.add_argument('-w', action='store_true')
     th.add_argument('rest', nargs='*', help='file or directory')
-    params = th.parse_args()
-    lg.debug('params={}'.format(params))
+    th.params = th.parse_args()
+    lg.debug('params={}'.format(th.params))
     time.sleep(2)
     lg.debug('end')
 
@@ -149,6 +150,10 @@ CommonThread.join_all()
 lg.debug('t1.result={}'.format(t1.result))
 lg.debug('t2.result={}'.format(t2.result))
 
+lg.debug(t1)
+lg.debug(t2)
+lg.debug(t3)
+
 print(CommonThread.are_active())
 ```
 
@@ -159,9 +164,9 @@ C:\root\commonthread\venv\Scripts\python.exe C:/root/commonthread/demo.py
 MainThread ==> starting
 MainThread ==> tfac.result=720
 MainThread ==> tfib.result=14930352
-MainThread ==> tfib.elapsed=3.5786149501800537
+MainThread ==> tfib.elapsed=3.8853442668914795
 MainThread ==> tfib2.result=14930352
-MainThread ==> tfib2.elapsed=4.179480791091919
+MainThread ==> tfib2.elapsed=4.307960748672485
 t0@MyThread ==> Starting Thread named t0@MyThread, args=('ONE', 'TWO', 'THREE'), kwargs={'required': True}
 t0@MyThread ==> ONE
 t0@MyThread ==> TWO
@@ -212,10 +217,13 @@ MainThread ==> t1.result=1234
 MainThread ==> t2.result=45
 True
 False
-False
 t0@MyThread ==> end
 MainThread ==> t1.result=1234
 MainThread ==> t2.result=45
+MainThread ==> Thread(name=t1@worker1, args=(123, 'abc', 4.56), kwargs={'kw1': 1, 'kw2': 'abcxyz'}, params={'abc': 1.23}, result=1234, elapsed=2.00205397605896)
+MainThread ==> Thread(name=t2@ParserThread, args=(123, datetime.datetime(2017, 9, 1, 12, 12)), kwargs={}, params={}, result=45, elapsed=1.3926126956939697)
+MainThread ==> Thread(name=t3@worker3, args=('install', '-z', 78.654321, 'abc', 'XYZ', 123, 456), kwargs={}, params=Namespace(operation='install', rest=['123', '456'], w=False, x='abc', y='XYZ', z='78.654321'), result=None, elapsed=2.0054287910461426)
+False
 
 Process finished with exit code 0
 ```

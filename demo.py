@@ -36,6 +36,7 @@ def worker1(th, *args, **kwargs):
     lg.debug('start')
     lg.debug(args)
     lg.debug(kwargs)
+    th.params["abc"] = 1.23
     time.sleep(2)
     lg.debug('end')
     return 1234
@@ -50,8 +51,8 @@ def worker3(th, *args):
     th.add_argument('-z', required=True)
     th.add_argument('-w', action='store_true')
     th.add_argument('rest', nargs='*', help='file or directory')
-    params = th.parse_args()
-    lg.debug('params={}'.format(params))
+    th.params = th.parse_args()
+    lg.debug('params={}'.format(th.params))
     time.sleep(2)
     lg.debug('end')
 
@@ -143,5 +144,9 @@ CommonThread.join_all()
 
 lg.debug('t1.result={}'.format(t1.result))
 lg.debug('t2.result={}'.format(t2.result))
+
+lg.debug(t1)
+lg.debug(t2)
+lg.debug(t3)
 
 print(CommonThread.are_active())
