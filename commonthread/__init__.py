@@ -103,9 +103,9 @@ class CommonThread(threading.Thread):
         return False
 
     @classmethod
-    def join_all(cls, type=None):
+    def join_all(cls, type=None, timeout=0.001):
         while CommonThread.are_active(type):
-            time.sleep(0.001)
+            time.sleep(timeout)
         return None
 
     @classmethod
