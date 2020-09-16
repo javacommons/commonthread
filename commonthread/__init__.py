@@ -54,11 +54,11 @@ class CommonThread(threading.Thread):
 
     def output(self, item, block=True, timeout=None):
         assert threading.current_thread() == self
-        return self.outq.put(item, block, timeout)
+        return self.outq.put(item, block=block, timeout=timeout)
 
     def input(self, block=True, timeout=None):
         assert threading.current_thread() == self
-        return self.inq.get(block, timeout)
+        return self.inq.get(block=block, timeout=timeout)
 
     def inputs_available(self):
         assert threading.current_thread() == self
@@ -72,11 +72,11 @@ class CommonThread(threading.Thread):
 
     def send(self, item, block=True, timeout=None):
         assert threading.current_thread() != self
-        return self.inq.put(item, block, timeout)
+        return self.inq.put(item, block=block, timeout=timeout)
 
     def receive(self, block=True, timeout=None):
         assert threading.current_thread() != self
-        return self.outq.get(block, timeout)
+        return self.outq.get(block=block, timeout=timeout)
 
     def receive_available(self):
         assert threading.current_thread() != self
