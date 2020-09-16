@@ -174,9 +174,9 @@ C:\root\commonthread\venv\Scripts\python.exe C:/root/commonthread/demo.py
 MainThread ==> starting
 MainThread ==> tfac.result=720
 MainThread ==> tfib.result=14930352
-MainThread ==> tfib.elapsed=3.6927261352539062
+MainThread ==> tfib.elapsed=4.03464674949646
 MainThread ==> tfib2.result=14930352
-MainThread ==> tfib2.elapsed=4.425175428390503
+MainThread ==> tfib2.elapsed=4.666651487350464
 t0@MyThread ==> Starting Thread named t0@MyThread, args=('ONE', 'TWO', 'THREE'), kwargs={'required': True}
 t0@MyThread ==> ONE
 t0@MyThread ==> TWO
@@ -184,10 +184,10 @@ t0@MyThread ==> THREE
 t1@worker1 ==> start
 t1@worker1 ==> (123, 'abc', 4.56)
 t1@worker1 ==> {'kw1': 1, 'kw2': 'abcxyz'}
-t2@ParserThread ==> params=Namespace(x=123.0, y='2017-09-01 12:12:00')
+t2@ParserThread ==> params={'x': 123.0, 'y': '2017-09-01 12:12:00'}
 t3@worker3 ==> start
 t3@worker3 ==> ('install', '-z', 78.654321, 'abc', 'XYZ', 123, 456)
-t3@worker3 ==> params=Namespace(operation='install', rest=['123', '456'], w=False, x='abc', y='XYZ', z='78.654321')
+t3@worker3 ==> params={'operation': 'install', 'x': 'abc', 'y': 'XYZ', 'z': '78.654321', 'w': False, 'rest': ['123', '456']}
 MainThread ==> started
 MainThread ==> 0
 t2@ParserThread ==> [0]
@@ -228,18 +228,18 @@ MainThread ==> t2.result=45
 True
 False
 [Thread(name=t0@MyThread, result=None, elapsed=0.0, args=('ONE', 'TWO', 'THREE'), kwargs={'required': True}, params={})]
-False
-[]
 t0@MyThread ==> end
 MainThread ==> t1.result=1234
 MainThread ==> t2.result=45
 MainThread ==> Thread(name=tfac, result=720, elapsed=0.0, args=(6,), kwargs={}, params={})
-MainThread ==> Thread(name=tfib, result=14930352, elapsed=3.6927261352539062, args=(36,), kwargs={}, params={})
-MainThread ==> Thread(name=tfib2, result=14930352, elapsed=4.425175428390503, args=(36,), kwargs={}, params={})
-MainThread ==> Thread(name=t0@MyThread, result=None, elapsed=5.016396760940552, args=('ONE', 'TWO', 'THREE'), kwargs={'required': True}, params={})
-MainThread ==> Thread(name=t1@worker1, result=1234, elapsed=2.0035300254821777, args=(123, 'abc', 4.56), kwargs={'kw1': 1, 'kw2': 'abcxyz'}, params={'abc': 1.23})
-MainThread ==> Thread(name=t2@ParserThread, result=45, elapsed=1.3489415645599365, args=(123, datetime.datetime(2017, 9, 1, 12, 12)), kwargs={}, params={})
-MainThread ==> Thread(name=t3@worker3, result=None, elapsed=2.010326623916626, args=('install', '-z', 78.654321, 'abc', 'XYZ', 123, 456), kwargs={}, params=Namespace(operation='install', rest=['123', '456'], w=False, x='abc', y='XYZ', z='78.654321'))
+MainThread ==> Thread(name=tfib, result=14930352, elapsed=4.03464674949646, args=(36,), kwargs={}, params={})
+MainThread ==> Thread(name=tfib2, result=14930352, elapsed=4.666651487350464, args=(36,), kwargs={}, params={})
+MainThread ==> Thread(name=t0@MyThread, result=None, elapsed=5.012861251831055, args=('ONE', 'TWO', 'THREE'), kwargs={'required': True}, params={})
+MainThread ==> Thread(name=t1@worker1, result=1234, elapsed=2.0109004974365234, args=(123, 'abc', 4.56), kwargs={'kw1': 1, 'kw2': 'abcxyz'}, params={'abc': 1.23})
+MainThread ==> Thread(name=t2@ParserThread, result=45, elapsed=1.3534178733825684, args=(123, datetime.datetime(2017, 9, 1, 12, 12)), kwargs={}, params={'x': 123.0, 'y': '2017-09-01 12:12:00'})
+MainThread ==> Thread(name=t3@worker3, result=None, elapsed=2.012187957763672, args=('install', '-z', 78.654321, 'abc', 'XYZ', 123, 456), kwargs={}, params={'operation': 'install', 'x': 'abc', 'y': 'XYZ', 'z': '78.654321', 'w': False, 'rest': ['123', '456']})
+False
+[]
 
 Process finished with exit code 0
 ```

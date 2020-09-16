@@ -53,7 +53,9 @@ class CommonThread(threading.Thread):
         str_array = []
         for p in self.args:
             str_array.append(str(p))
-        return self.parser.parse_args(str_array)
+        ns = self.parser.parse_args(str_array)
+        self.params = vars(ns)
+        return self.params
 
     def output(self, item, block=True, timeout=None):
         assert threading.current_thread() == self
