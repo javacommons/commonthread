@@ -128,6 +128,14 @@ class CommonThread(threading.Thread):
                 result.append(thread)
         return result
 
+    @classmethod
+    def list_alive_names(cls, type=None):
+        list = CommonThread.list_alive(type=type)
+        result = []
+        for thread in list:
+            result.append(thread.name)
+        return result
+
 
 class WorkerThread(CommonThread):
 
@@ -153,6 +161,11 @@ class ThreadGroup:
 
     def start(self):
         for thread in self.thread_list:
+            thread.start()
+
+    def add(self, thread):
+        self.thread_list.append(thread)
+        if self.auto_start:
             thread.start()
 
     def is_alive(self):

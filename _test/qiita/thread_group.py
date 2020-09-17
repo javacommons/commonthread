@@ -31,17 +31,17 @@ groupS = ThreadGroup(sth1, sth2)
 
 lth1 = LongThread(5.0); lth1.name = 'lth1'
 lth2 = LongThread(6.0); lth2.name = 'lth2'
-groupL = ThreadGroup(lth1, lth2)
+groupL = ThreadGroup(lth1, auto_start=True)
+groupL.add(lth2)
 
 groupS.start()
-groupL.start()
 
-lg.debug(CommonThread.list_alive())
+lg.debug(CommonThread.list_alive_names())
 
 groupS.join()
 
-lg.debug(CommonThread.list_alive())
+lg.debug(CommonThread.list_alive_names())
 
 CommonThread.join_all()
 
-lg.debug(CommonThread.list_alive())
+lg.debug(CommonThread.list_alive_names())
