@@ -9,3 +9,5 @@ class WorkerThread(CommonThread):
 
 # delete this line!
 # delete this line!
+
+threading – スレッドによる並列処理を管理する - Python Module of the Week http://ja.pymotw.com/2/threading/
