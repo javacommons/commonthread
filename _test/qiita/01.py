@@ -12,7 +12,10 @@ def fibonacci_worker(th: WorkerThread, n: int):
 thread = WorkerThread(fibonacci_worker, 36)
 thread.name = 'tfib'
 thread.start()
-thread.join()
+success = thread.join(timeout=0.5)
+print('success={}'.format(success))
+success = thread.join()
+print('success={}'.format(success))
 print('result={}'.format(thread.result))
 print('elapsed={}'.format(thread.elapsed))
 print(thread)
