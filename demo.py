@@ -134,13 +134,13 @@ for i in range(10):
     t2.send(i)
 t2.send(None)
 
-print(CommonThread.are_active())
+print(CommonThread.are_alive())
 
 CommonThread.join_all(type=WorkerThread)
 
-print(CommonThread.are_active())
-print(CommonThread.are_active(type=WorkerThread))
-print(CommonThread.list_active())
+print(CommonThread.are_alive())
+print(CommonThread.are_alive(type=WorkerThread))
+print(CommonThread.list_alive())
 
 lg.debug('t1.result={}'.format(t1.result))
 lg.debug('t2.result={}'.format(t2.result))
@@ -159,5 +159,5 @@ lg.debug(t1)
 lg.debug(t2)
 lg.debug(t3)
 
-print(CommonThread.are_active())
-print(CommonThread.list_active())
+print(CommonThread.are_alive())
+print(CommonThread.list_alive())

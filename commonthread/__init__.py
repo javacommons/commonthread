@@ -99,7 +99,7 @@ class CommonThread(threading.Thread):
         return result
 
     @classmethod
-    def are_active(cls, type=None):
+    def are_alive(cls, type=None):
         if type is None:
             type = CommonThread
         for thread in threading.enumerate():
@@ -110,16 +110,16 @@ class CommonThread(threading.Thread):
     @classmethod
     def join_all(cls, type=None, timeout=None) -> bool:
         t0 = time.time()
-        while CommonThread.are_active(type=type):
+        while CommonThread.are_alive(type=type):
             time.sleep(0.0)
             if timeout is not None:
                 t1 = time.time()
                 if (t1 - t0) >= timeout:
-                    return not CommonThread.are_active(type=type)
+                    return not CommonThread.are_alive(type=type)
         return True
 
     @classmethod
-    def list_active(cls, type=None):
+    def list_alive(cls, type=None):
         if type is None:
             type = CommonThread
         result = []
@@ -140,3 +140,33 @@ class WorkerThread(CommonThread):
         self.result = self.worker_function(self, *self.args, **self.kwargs)
         t1 = time.time()
         self.elapsed = t1 - t0
+
+
+class ThreadGroup:
+
+    def __init__(self, *thread_list, auto_start=False):
+        self.thread_list = list(thread_list)
+        print(self.thread_list)
+        self.auto_start = auto_start
+        if self.auto_start:
+            self.start()
+
+    def start(self):
+        for thread in self.thread_list:
+            thread.start()
+
+    def is_alive(self):
+        for thread in self.thread_list:
+            if thread.is_alive():
+                return True
+        return False
+
+    def join(self, timeout=None):
+        t0 = time.time()
+        while self.is_alive():
+            time.sleep(0.0)
+            if timeout is not None:
+                t1 = time.time()
+                if (t1 - t0) >= timeout:
+                    return not self.is_alive()
+        return True

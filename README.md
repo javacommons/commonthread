@@ -28,6 +28,7 @@ def fibonacci_worker(th: WorkerThread, n: int):
         return fibonacci_worker(th, n - 2) + fibonacci_worker(th, n - 1)
 
 
+# source https://techacademy.jp/magazine/28155
 class FibonacciThread(CommonThread):
 
     def entry(self, n: int):
@@ -138,13 +139,13 @@ for i in range(10):
     t2.send(i)
 t2.send(None)
 
-print(CommonThread.are_active())
+print(CommonThread.are_alive())
 
 CommonThread.join_all(type=WorkerThread)
 
-print(CommonThread.are_active())
-print(CommonThread.are_active(type=WorkerThread))
-print(CommonThread.list_active())
+print(CommonThread.are_alive())
+print(CommonThread.are_alive(type=WorkerThread))
+print(CommonThread.list_alive())
 
 lg.debug('t1.result={}'.format(t1.result))
 lg.debug('t2.result={}'.format(t2.result))
@@ -163,8 +164,8 @@ lg.debug(t1)
 lg.debug(t2)
 lg.debug(t3)
 
-print(CommonThread.are_active())
-print(CommonThread.list_active())
+print(CommonThread.are_alive())
+print(CommonThread.list_alive())
 ```
 
 * Output:
@@ -174,9 +175,9 @@ C:\root\commonthread\venv\Scripts\python.exe C:/root/commonthread/demo.py
 MainThread ==> starting
 MainThread ==> tfac.result=720
 MainThread ==> tfib.result=14930352
-MainThread ==> tfib.elapsed=3.5365500450134277
+MainThread ==> tfib.elapsed=4.4418253898620605
 MainThread ==> tfib2.result=14930352
-MainThread ==> tfib2.elapsed=4.415233850479126
+MainThread ==> tfib2.elapsed=5.41144871711731
 t0@MyThread ==> Starting Thread named t0@MyThread, args=('ONE', 'TWO', 'THREE'), required=True
 t0@MyThread ==> ONE
 t0@MyThread ==> TWO
@@ -232,12 +233,12 @@ t0@MyThread ==> end
 MainThread ==> t1.result=1234
 MainThread ==> t2.result=45
 MainThread ==> WorkerThread(name=tfac, result=720, elapsed=0.0, args=(6,), kwargs={}, params={})
-MainThread ==> WorkerThread(name=tfib, result=14930352, elapsed=3.5365500450134277, args=(36,), kwargs={}, params={})
-MainThread ==> FibonacciThread(name=tfib2, result=14930352, elapsed=4.415233850479126, args=(36,), kwargs={}, params={})
-MainThread ==> MyThread(name=t0@MyThread, result=None, elapsed=5.009608030319214, args=('ONE', 'TWO', 'THREE'), kwargs={'required': True}, params={})
-MainThread ==> WorkerThread(name=t1@worker1, result=1234, elapsed=2.010605573654175, args=(123, 'abc', 4.56), kwargs={'kw1': 1, 'kw2': 'abcxyz'}, params={'abc': 1.23})
-MainThread ==> ParserThread(name=t2@ParserThread, result=45, elapsed=1.3893027305603027, args=(123, datetime.datetime(2017, 9, 1, 12, 12)), kwargs={}, params={'x': 123.0, 'y': '2017-09-01 12:12:00'})
-MainThread ==> WorkerThread(name=t3@worker3, result=None, elapsed=2.0086007118225098, args=('install', '-z', 78.654321, 'abc', 'XYZ', 123, 456), kwargs={}, params={'operation': 'install', 'x': 'abc', 'y': 'XYZ', 'z': '78.654321', 'w': False, 'rest': ['123', '456']})
+MainThread ==> WorkerThread(name=tfib, result=14930352, elapsed=4.4418253898620605, args=(36,), kwargs={}, params={})
+MainThread ==> FibonacciThread(name=tfib2, result=14930352, elapsed=5.41144871711731, args=(36,), kwargs={}, params={})
+MainThread ==> MyThread(name=t0@MyThread, result=None, elapsed=5.009681224822998, args=('ONE', 'TWO', 'THREE'), kwargs={'required': True}, params={})
+MainThread ==> WorkerThread(name=t1@worker1, result=1234, elapsed=2.0124692916870117, args=(123, 'abc', 4.56), kwargs={'kw1': 1, 'kw2': 'abcxyz'}, params={'abc': 1.23})
+MainThread ==> ParserThread(name=t2@ParserThread, result=45, elapsed=1.3578600883483887, args=(123, datetime.datetime(2017, 9, 1, 12, 12)), kwargs={}, params={'x': 123.0, 'y': '2017-09-01 12:12:00'})
+MainThread ==> WorkerThread(name=t3@worker3, result=None, elapsed=2.0018725395202637, args=('install', '-z', 78.654321, 'abc', 'XYZ', 123, 456), kwargs={}, params={'operation': 'install', 'x': 'abc', 'y': 'XYZ', 'z': '78.654321', 'w': False, 'rest': ['123', '456']})
 False
 []
 

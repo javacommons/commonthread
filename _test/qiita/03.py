@@ -9,6 +9,7 @@ class AddThread(CommonThread):
         self.y = y
 
     def entry(self):
+        time.sleep(2.0)
         return self.x + self.y
 
 
