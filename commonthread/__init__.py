@@ -116,7 +116,7 @@ class CommonThread(threading.Thread):
                 t1 = time.time()
                 if (t1 - t0) >= timeout:
                     return not CommonThread.are_active(type=type)
-        return not CommonThread.are_active(type=type)
+        return True
 
     @classmethod
     def list_active(cls, type=None):
