@@ -24,7 +24,7 @@ class CommonThread(threading.Thread):
 
     def __init__(self, *args, **kwargs):
         threading.Thread.__init__(self)
-        self.args = args
+        self.args = list(args)
         self.kwargs = kwargs
         self.inq = queue.Queue()
         self.outq = queue.Queue()
