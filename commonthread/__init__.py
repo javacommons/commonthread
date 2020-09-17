@@ -47,8 +47,8 @@ class CommonThread(threading.Thread):
         t1 = time.time()
         self.elapsed = t1 - t0
 
-    def join(self, *args, **kwargs) -> bool:
-        super().join(*args, **kwargs)
+    def join(self, timeout=None) -> bool:
+        super().join(timeout=timeout)
         return not super().is_alive()
 
     def add_argument(self, *args, **kwargs):
