@@ -1,5 +1,6 @@
 import argparse
 import logging
+import pprint
 import queue
 import threading
 import time
@@ -13,10 +14,14 @@ class CommonThreadLogger:
     def setup_basic(cls, format='%(threadName)s: %(message)s', level=logging.DEBUG):
         logging.basicConfig(level=level, format=format)
 
-    def debug(self, msg):
+    def debug(self, msg, pretty=False):
+        if pretty:
+            msg = pprint.pformat(msg, indent=2)
         return logging.debug(msg)
 
-    def info(self, msg):
+    def info(self, msg, pretty=False):
+        if pretty:
+            msg = pprint.pformat(msg, indent=2)
         return logging.info(msg)
 
 
