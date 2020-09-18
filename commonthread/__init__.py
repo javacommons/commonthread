@@ -129,14 +129,8 @@ class CommonThread(threading.Thread):
 
     @classmethod
     def join_all(cls, type=None, timeout=None) -> bool:
-        t0 = time.time()
-        while CommonThread.are_alive(type=type):
-            time.sleep(0.0)
-            if timeout is not None:
-                t1 = time.time()
-                if (t1 - t0) >= timeout:
-                    return not CommonThread.are_alive(type=type)
-        return True
+        group = CommonThread.group_alive(type)
+        group.join(timeout=timeout)
 
     @classmethod
     def list_alive(cls, type=None):
@@ -156,6 +150,11 @@ class CommonThread(threading.Thread):
             result.append(thread.name)
         return result
 
+    @classmethod
+    def group_alive(cls, type=None):
+        list = CommonThread.list_alive(type=type)
+        return ThreadGroup(*list)
+
 
 class WorkerThread(CommonThread):
 
@@ -172,12 +171,18 @@ class WorkerThread(CommonThread):
 
 class ThreadGroup:
 
-    def __init__(self, *thread_list, auto_start=False):
+    def __init__(self, *thread_list, name=None, auto_start=False):
         self.thread_list = list(thread_list)
-        print(self.thread_list)
+        self.name = name
         self.auto_start = auto_start
         if self.auto_start:
             self.start()
+
+    def __repr__(self):
+        list = []
+        for thread in self.thread_list:
+            list.append(thread.name)
+        return 'ThreadGroup(name={}, thread_list={}'.format(self.name, list)
 
     def start(self):
         for thread in self.thread_list:
