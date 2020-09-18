@@ -156,13 +156,13 @@ lg.debug('t1.result={}'.format(t1.result))
 lg.debug('t2.result={}'.format(t2.result))
 
 
-lg.debug(tfac)
-lg.debug(tfib)
-lg.debug(tfib2)
-lg.debug(t0)
-lg.debug(t1)
-lg.debug(t2)
-lg.debug(t3)
+lg.debug(tfac, True)
+lg.debug(tfib, True)
+lg.debug(tfib2, True)
+lg.debug(t0, True)
+lg.debug(t1, True)
+lg.debug(t2, True)
+lg.debug(t3, True)
 
 print(CommonThread.are_alive())
 print(CommonThread.list_alive())
@@ -175,9 +175,9 @@ C:\root\commonthread\venv\Scripts\python.exe C:/root/commonthread/demo.py
 MainThread ==> starting
 MainThread ==> tfac.result=720
 MainThread ==> tfib.result=14930352
-MainThread ==> tfib.elapsed=4.4418253898620605
+MainThread ==> tfib.elapsed=3.5754685401916504
 MainThread ==> tfib2.result=14930352
-MainThread ==> tfib2.elapsed=5.41144871711731
+MainThread ==> tfib2.elapsed=4.035240411758423
 t0@MyThread ==> Starting Thread named t0@MyThread, args=('ONE', 'TWO', 'THREE'), required=True
 t0@MyThread ==> ONE
 t0@MyThread ==> TWO
@@ -228,19 +228,66 @@ MainThread ==> t1.result=1234
 MainThread ==> t2.result=45
 True
 False
-[MyThread(name=t0@MyThread, result=None, elapsed=0.0, args=('ONE', 'TWO', 'THREE'), kwargs={'required': True}, params={})]
+[MyThread(name=t0@MyThread, result=None, elapsed=0.0, args=['ONE', 'TWO', 'THREE'], kwargs={'required': True}, params={})]
+False
+[]
 t0@MyThread ==> end
 MainThread ==> t1.result=1234
 MainThread ==> t2.result=45
-MainThread ==> WorkerThread(name=tfac, result=720, elapsed=0.0, args=(6,), kwargs={}, params={})
-MainThread ==> WorkerThread(name=tfib, result=14930352, elapsed=4.4418253898620605, args=(36,), kwargs={}, params={})
-MainThread ==> FibonacciThread(name=tfib2, result=14930352, elapsed=5.41144871711731, args=(36,), kwargs={}, params={})
-MainThread ==> MyThread(name=t0@MyThread, result=None, elapsed=5.009681224822998, args=('ONE', 'TWO', 'THREE'), kwargs={'required': True}, params={})
-MainThread ==> WorkerThread(name=t1@worker1, result=1234, elapsed=2.0124692916870117, args=(123, 'abc', 4.56), kwargs={'kw1': 1, 'kw2': 'abcxyz'}, params={'abc': 1.23})
-MainThread ==> ParserThread(name=t2@ParserThread, result=45, elapsed=1.3578600883483887, args=(123, datetime.datetime(2017, 9, 1, 12, 12)), kwargs={}, params={'x': 123.0, 'y': '2017-09-01 12:12:00'})
-MainThread ==> WorkerThread(name=t3@worker3, result=None, elapsed=2.0018725395202637, args=('install', '-z', 78.654321, 'abc', 'XYZ', 123, 456), kwargs={}, params={'operation': 'install', 'x': 'abc', 'y': 'XYZ', 'z': '78.654321', 'w': False, 'rest': ['123', '456']})
-False
-[]
+MainThread ==> { 'type': 'WorkerThread',
+  'name': 'tfac',
+  'result': 720,
+  'elapsed': 0.0,
+  'args': [6],
+  'kwargs': {},
+  'params': {}}
+MainThread ==> { 'type': 'WorkerThread',
+  'name': 'tfib',
+  'result': 14930352,
+  'elapsed': 3.5754685401916504,
+  'args': [36],
+  'kwargs': {},
+  'params': {}}
+MainThread ==> { 'type': 'FibonacciThread',
+  'name': 'tfib2',
+  'result': 14930352,
+  'elapsed': 4.035240411758423,
+  'args': [36],
+  'kwargs': {},
+  'params': {}}
+MainThread ==> { 'type': 'MyThread',
+  'name': 't0@MyThread',
+  'result': None,
+  'elapsed': 5.006505966186523,
+  'args': ['ONE', 'TWO', 'THREE'],
+  'kwargs': {'required': True},
+  'params': {}}
+MainThread ==> { 'type': 'WorkerThread',
+  'name': 't1@worker1',
+  'result': 1234,
+  'elapsed': 2.006732702255249,
+  'args': [123, 'abc', 4.56],
+  'kwargs': {'kw1': 1, 'kw2': 'abcxyz'},
+  'params': {'abc': 1.23}}
+MainThread ==> { 'type': 'ParserThread',
+  'name': 't2@ParserThread',
+  'result': 45,
+  'elapsed': 1.3843653202056885,
+  'args': [123, datetime.datetime(2017, 9, 1, 12, 12)],
+  'kwargs': {},
+  'params': {'x': 123.0, 'y': '2017-09-01 12:12:00'}}
+MainThread ==> { 'type': 'WorkerThread',
+  'name': 't3@worker3',
+  'result': None,
+  'elapsed': 2.008695125579834,
+  'args': ['install', '-z', 78.654321, 'abc', 'XYZ', 123, 456],
+  'kwargs': {},
+  'params': { 'operation': 'install',
+              'x': 'abc',
+              'y': 'XYZ',
+              'z': '78.654321',
+              'w': False,
+              'rest': ['123', '456']}}
 
 Process finished with exit code 0
 ```

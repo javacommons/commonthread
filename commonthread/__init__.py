@@ -2,6 +2,7 @@ import argparse
 import logging
 import pprint
 import queue
+import sys
 import threading
 import time
 
@@ -16,12 +17,22 @@ class CommonThreadLogger:
 
     def debug(self, msg, pretty=False):
         if pretty:
-            msg = pprint.pformat(msg, indent=2)
+            if isinstance(msg, CommonThread):
+                msg = msg.info()
+            if sys.version_info.major >= 4 or (sys.version_info.major == 3 and sys.version_info.minor >= 8):
+                msg = pprint.pformat(msg, indent=2, sort_dicts=False)
+            else:
+                msg = pprint.pformat(msg, indent=2)
         return logging.debug(msg)
 
     def info(self, msg, pretty=False):
         if pretty:
-            msg = pprint.pformat(msg, indent=2)
+            if isinstance(msg, CommonThread):
+                msg = msg.info()
+            if sys.version_info.major >= 4 or (sys.version_info.major == 3 and sys.version_info.minor >= 8):
+                msg = pprint.pformat(msg, indent=2, sort_dicts=False)
+            else:
+                msg = pprint.pformat(msg, indent=2)
         return logging.info(msg)
 
 
@@ -37,6 +48,10 @@ class CommonThread(threading.Thread):
         self.params = {}
         self.elapsed = 0.0
         self.result = None
+
+    def info(self):
+        return {'type': self.__class__.__name__, 'name': self.name, 'result': self.result, 'elapsed': self.elapsed,
+                'args': self.args, 'kwargs': self.kwargs, 'params': self.params}
 
     def __repr__(self):
         return '{}(name={}, result={}, elapsed={}, args={}, kwargs={}, params={})'.format(
