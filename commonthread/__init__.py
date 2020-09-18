@@ -171,9 +171,12 @@ class WorkerThread(CommonThread):
 
 class ThreadGroup:
 
-    def __init__(self, *thread_list, name=None, auto_start=False):
+    count = 0
+
+    def __init__(self, *thread_list, auto_start=False):
         self.thread_list = list(thread_list)
-        self.name = name
+        ThreadGroup.count += 1
+        self.name = 'ThreadGroup-{}'.format(ThreadGroup.count)
         self.auto_start = auto_start
         if self.auto_start:
             self.start()
