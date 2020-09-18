@@ -208,3 +208,17 @@ class ThreadGroup:
                 if (t1 - t0) >= timeout:
                     return not self.is_alive()
         return True
+
+    def list_alive(self):
+        result = []
+        for thread in self.thread_list:
+            if thread.is_alive:
+                result.append(thread)
+        return result
+
+    def list_alive_names(self):
+        list = self.list_alive()
+        result = []
+        for thread in list:
+            result.append(thread.name)
+        return result
