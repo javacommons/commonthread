@@ -3,7 +3,6 @@ import time
 
 
 lg = ThreadLogger()
-lg.setup_basic()
 lg.debug('hello!')
 
 

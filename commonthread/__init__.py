@@ -9,11 +9,14 @@ import time
 
 class ThreadLogger:
 
-    def __init__(self):
-        pass
-
-    def setup_basic(cls, format='%(threadName)s: %(message)s', level=logging.DEBUG):
-        logging.basicConfig(level=level, format=format)
+    def __init__(self, format='%(threadName)s: %(message)s', level=logging.DEBUG, name='default'):
+        self.log = logging.getLogger(name)
+        self.log.setLevel(level)
+        formatter = logging.Formatter(format)
+        h = logging.StreamHandler()
+        h.setLevel(level)
+        h.setFormatter(formatter)
+        self.log.addHandler(h)
 
     def debug(self, msg, pretty=False):
         if pretty:
@@ -23,7 +26,7 @@ class ThreadLogger:
                 msg = pprint.pformat(msg, indent=2, sort_dicts=False)
             else:
                 msg = pprint.pformat(msg, indent=2)
-        return logging.debug(msg)
+        return self.log.debug(msg)
 
     def info(self, msg, pretty=False):
         if pretty:
@@ -33,7 +36,7 @@ class ThreadLogger:
                 msg = pprint.pformat(msg, indent=2, sort_dicts=False)
             else:
                 msg = pprint.pformat(msg, indent=2)
-        return logging.info(msg)
+        return self.log.info(msg)
 
 
 class CommonThread(threading.Thread):

@@ -3,8 +3,7 @@ import datetime
 import time
 
 
-lg = ThreadLogger()
-lg.setup_basic(format='%(threadName)s ==> %(message)s')
+lg = ThreadLogger(format='%(threadName)s ==> %(message)s')
 
 
 # source https://techacademy.jp/magazine/28155
