@@ -1,7 +1,7 @@
 from commonthread import *
 
 
-lg = CommonThreadLogger()
+lg = ThreadLogger()
 lg.setup_basic()
 
 

@@ -3,7 +3,7 @@ from gooey import Gooey
 from MyGooeyParser import MyGooeyParser
 import sys
 
-lg = CommonThreadLogger()
+lg = ThreadLogger()
 lg.setup_basic()
 
 

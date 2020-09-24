@@ -4,7 +4,7 @@ from MyGooeyParser import MyGooeyParser
 import sys
 import time
 
-lg = CommonThreadLogger()
+lg = ThreadLogger()
 lg.setup_basic()
 
 program_message = \

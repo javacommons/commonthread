@@ -2,7 +2,7 @@ from commonthread import *
 import time
 
 
-lg = CommonThreadLogger()
+lg = ThreadLogger()
 lg.setup_basic()
 lg.debug('hello!')
 

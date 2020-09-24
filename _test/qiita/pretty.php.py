@@ -1,7 +1,7 @@
 from commonthread import *
 
 
-lg = CommonThreadLogger()
+lg = ThreadLogger()
 lg.setup_basic()
 
 d = {'kanagawa': ['横浜', '相模原', '湘南', '鎌倉'],

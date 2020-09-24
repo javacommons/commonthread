@@ -7,7 +7,7 @@ import threading
 import time
 
 
-class CommonThreadLogger:
+class ThreadLogger:
 
     def __init__(self):
         pass
