@@ -1,3 +1,4 @@
+#! python
 from commonthread import *
 import time
 

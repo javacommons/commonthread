@@ -6,10 +6,10 @@ import sys
 import threading
 import time
 
-
 class ThreadLogger:
 
-    def __init__(self, format='%(threadName)s: %(message)s', level=logging.DEBUG, name='default'):
+    def __init__(self, enabled=True, format='%(threadName)s: %(message)s', level=logging.DEBUG, name='ThreadLogger'):
+        self.enabled = enabled
         self.log = logging.getLogger(name)
         self.log.setLevel(level)
         formatter = logging.Formatter(format)
@@ -18,7 +18,7 @@ class ThreadLogger:
         h.setFormatter(formatter)
         self.log.addHandler(h)
 
-    def debug(self, msg, pretty=False):
+    def format(self, msg, pretty=False):
         if pretty:
             if isinstance(msg, CommonThread):
                 msg = msg.info()
@@ -26,18 +26,15 @@ class ThreadLogger:
                 msg = pprint.pformat(msg, indent=2, sort_dicts=False)
             else:
                 msg = pprint.pformat(msg, indent=2)
+        return msg
+
+    def debug(self, msg, pretty=False):
+        msg = self.format(msg, pretty)
         return self.log.debug(msg)
 
     def info(self, msg, pretty=False):
-        if pretty:
-            if isinstance(msg, CommonThread):
-                msg = msg.info()
-            if sys.version_info.major >= 4 or (sys.version_info.major == 3 and sys.version_info.minor >= 8):
-                msg = pprint.pformat(msg, indent=2, sort_dicts=False)
-            else:
-                msg = pprint.pformat(msg, indent=2)
+        msg = self.format(msg, pretty)
         return self.log.info(msg)
-
 
 class CommonThread(threading.Thread):
 
@@ -170,7 +167,6 @@ class WorkerThread(CommonThread):
         self.result = self.worker_function(self, *self.args, **self.kwargs)
         t1 = time.time()
         self.elapsed = t1 - t0
-
 
 class ThreadGroup:
 

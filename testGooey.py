@@ -1,3 +1,4 @@
+#! python
 from commonthread import *
 from gooey import Gooey
 from MyGooeyParser import MyGooeyParser
