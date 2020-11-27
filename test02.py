@@ -1,10 +1,9 @@
+#! python
 from commonthread import *
 import time
 
-
 lg = ThreadLogger()
 lg.debug('hello!')
-
 
 def worker1(th: WorkerThread, x, y):
     lg.debug('start')
@@ -14,7 +13,6 @@ def worker1(th: WorkerThread, x, y):
     time.sleep(5)
     lg.debug('end')
     return True
-
 
 t1 = WorkerThread(worker1, 'XXX', 'YYY')
 lg.debug(t1)

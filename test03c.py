@@ -1,10 +1,9 @@
+#! python
 from commonthread import *
 import time
 
-
 lg = ThreadLogger()
 lg.debug('hello!')
-
 
 class MyThread(CommonThread):
 
@@ -16,7 +15,6 @@ class MyThread(CommonThread):
         lg.debug('kwargs={}'.format(kwargs))
         time.sleep(5)
         lg.debug('end')
-
 
 t1 = MyThread('XXX', 'YYY', kw1='KeyWord-1')
 t1.start()

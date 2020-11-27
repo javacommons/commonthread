@@ -1,10 +1,9 @@
+#! python
 from commonthread import *
 import time
 
-
 lg = ThreadLogger()
 lg.debug('hello!')
-
 
 class RealWorker:
     def __init__(self, th: CommonThread, x: int, y: int):
@@ -15,7 +14,6 @@ class RealWorker:
     def calc(self):
         self.th.output('dummy')
         return self.x, self.y
-
 
 class MyThread(CommonThread):
 
@@ -35,7 +33,6 @@ class MyThread(CommonThread):
         result = worker.calc()
         lg.debug('end')
         return result
-
 
 t1 = MyThread(123, 456)
 t1.start()
